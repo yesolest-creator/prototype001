@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -5,247 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>데이터로 말하기 — 대기·해양 웹앱 프로젝트</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
-<style>
-:root{
-  --abyss:#0B1A2E;
-  --deep:#132a45;
-  --slate:#4A5C72;
-  --mist:#8FA3B8;
-  --paper:#F4F6F8;
-  --white:#FFFFFF;
-  --tide:#00A79D;
-  --tide-dim:#B7E4E0;
-  --signal:#E0873B;
-  --alert:#C2453C;
-  --line:#DCE3EA;
-  --mono:'JetBrains Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
-  --sans:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,'Malgun Gothic',sans-serif;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:var(--sans);
-  background:var(--paper);
-  color:var(--abyss);
-  line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-}
-:focus-visible{outline:2.5px solid var(--tide);outline-offset:3px;border-radius:2px}
-
-/* ---------- 헤더 ---------- */
-.masthead{
-  background:var(--abyss);
-  color:var(--white);
-  padding:34px 28px 0;
-  position:relative;
-  overflow:hidden;
-}
-.masthead::after{
-  content:"";
-  position:absolute;inset:auto 0 0 0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--tide),transparent);
-}
-.mast-inner{max-width:1080px;margin:0 auto}
-.eyebrow{
-  font-family:var(--mono);
-  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--tide);margin-bottom:14px;
-}
-.masthead h1{
-  font-size:clamp(26px,4.4vw,44px);
-  font-weight:800;letter-spacing:-.03em;line-height:1.18;
-}
-.masthead h1 em{font-style:normal;color:var(--tide)}
-.mast-sub{
-  color:var(--mist);font-size:15px;margin-top:12px;max-width:640px;
-}
-.proto-tag{
-  display:inline-block;margin-top:18px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.08em;
-  border:1px solid rgba(255,255,255,.28);
-  color:var(--mist);
-  padding:5px 11px;border-radius:3px;
-}
-
-/* ---------- 스텝 레일 (시그니처) ---------- */
-.rail{background:var(--abyss);padding:26px 28px 0;position:sticky;top:0;z-index:50}
-.rail-inner{max-width:1080px;margin:0 auto;position:relative}
-.rail-track{
-  display:flex;gap:0;position:relative;
-  border-bottom:1px solid rgba(255,255,255,.12);
-  overflow-x:auto;scrollbar-width:none;
-}
-.rail-track::-webkit-scrollbar{display:none}
-.node{
-  flex:1 0 auto;min-width:128px;
-  background:none;border:0;cursor:pointer;
-  padding:0 12px 14px;text-align:left;
-  color:var(--mist);font-family:var(--sans);
-  position:relative;transition:color .2s;
-}
-.node:hover{color:var(--white)}
-.node-num{
-  font-family:var(--mono);font-size:10px;letter-spacing:.16em;
-  display:block;margin-bottom:5px;opacity:.7;
-}
-.node-label{font-size:13px;font-weight:600;letter-spacing:-.01em;display:block}
-.node::after{
-  content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;
-  background:var(--tide);transform:scaleX(0);transform-origin:left;
-  transition:transform .32s cubic-bezier(.4,0,.2,1);
-}
-.node[aria-selected="true"]{color:var(--white)}
-.node[aria-selected="true"]::after{transform:scaleX(1)}
-.node[aria-selected="true"] .node-num{color:var(--tide);opacity:1}
-
-/* ---------- 본문 ---------- */
-main{max-width:1080px;margin:0 auto;padding:44px 28px 90px}
-.panel{display:none;animation:rise .38s cubic-bezier(.2,.7,.3,1)}
-.panel.on{display:block}
-@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-
-.phead{margin-bottom:30px;padding-bottom:20px;border-bottom:2px solid var(--abyss)}
-.phead h2{font-size:clamp(21px,3vw,29px);font-weight:800;letter-spacing:-.03em}
-.phead p{color:var(--slate);margin-top:8px;font-size:15px;max-width:660px}
-
-.card{
-  background:var(--white);border:1px solid var(--line);
-  border-radius:5px;padding:24px;margin-bottom:18px;
-}
-.card h3{
-  font-size:16px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px;
-  display:flex;align-items:center;gap:9px;flex-wrap:wrap;
-}
-.card h3::before{
-  content:"";width:3px;height:15px;background:var(--tide);border-radius:2px;flex:none;
-}
-.card p{font-size:14.5px;color:var(--slate)}
-.card p + p{margin-top:9px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-@media(max-width:780px){.grid2{grid-template-columns:1fr}}
-
-.badge{
-  font-family:var(--mono);font-size:10px;letter-spacing:.09em;
-  padding:3px 8px;border-radius:3px;font-weight:500;
-  border:1px solid;white-space:nowrap;
-}
-.b-todo{color:var(--signal);border-color:#F0D3B4;background:#FDF6EE}
-.b-live{color:var(--tide);border-color:var(--tide-dim);background:#EEFAF9}
-.b-open{color:var(--slate);border-color:var(--line);background:var(--paper)}
-
-.note{
-  border-left:3px solid var(--signal);background:#FDF8F2;
-  padding:14px 16px;border-radius:0 4px 4px 0;
-  font-size:13.5px;color:#7A5526;margin-top:14px;
-}
-.note strong{color:#5E3F17}
-
-table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px}
-th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
-th{
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--slate);font-weight:500;background:var(--paper);
-}
-td{color:var(--slate)}
-td:first-child{color:var(--abyss);font-weight:600}
-
-/* 타임라인 */
-.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:6px}
-@media(max-width:780px){.tl{grid-template-columns:1fr 1fr}}
-.tl-item{border-top:2px solid var(--abyss);padding-top:12px}
-.tl-item .h{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--tide);margin-bottom:6px}
-.tl-item .t{font-size:14px;font-weight:700;margin-bottom:6px}
-.tl-item .d{font-size:12.5px;color:var(--slate);line-height:1.55}
-
-/* 차트 */
-.chartbox{background:var(--white);border:1px solid var(--line);border-radius:5px;padding:20px}
-.chart-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
-.chart-title{font-size:13px;font-weight:700}
-.toggle{
-  display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden;
-}
-.toggle button{
-  font-family:var(--mono);font-size:11px;letter-spacing:.05em;
-  padding:6px 13px;border:0;background:var(--white);color:var(--slate);cursor:pointer;
-  transition:background .18s,color .18s;
-}
-.toggle button[aria-pressed="true"]{background:var(--abyss);color:var(--white)}
-svg{display:block;width:100%;height:auto}
-.bar{transition:y .5s cubic-bezier(.3,.8,.3,1),height .5s cubic-bezier(.3,.8,.3,1)}
-.axis-line{stroke:var(--line);stroke-width:1}
-.axis-txt{font-family:var(--mono);font-size:10px;fill:var(--mist)}
-.bar-lab{font-family:var(--sans);font-size:12px;font-weight:600;fill:var(--abyss)}
-.bar-val{font-family:var(--mono);font-size:11px;fill:var(--slate)}
-.verdict{
-  margin-top:13px;padding:11px 14px;border-radius:4px;font-size:13px;
-  font-family:var(--sans);line-height:1.55;
-}
-.v-bad{background:#FBEDEC;color:#8E2F27;border-left:3px solid var(--alert)}
-.v-ok{background:#EEFAF9;color:#0A6660;border-left:3px solid var(--tide)}
-
-/* 버튼 */
-.btn{
-  font-family:var(--sans);font-size:13.5px;font-weight:600;
-  padding:11px 18px;border-radius:4px;cursor:pointer;border:1px solid var(--abyss);
-  background:var(--abyss);color:var(--white);transition:opacity .18s,transform .12s;
-}
-.btn:hover{opacity:.86}
-.btn:active{transform:translateY(1px)}
-.btn.ghost{background:var(--white);color:var(--abyss)}
-.btn.tide{background:var(--tide);border-color:var(--tide)}
-.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-
-/* 폼 */
-.field{margin-bottom:18px}
-.field label{
-  display:block;font-size:12px;font-weight:700;margin-bottom:6px;letter-spacing:-.01em;
-}
-.field .hint{font-size:11.5px;color:var(--mist);font-weight:400;margin-left:6px}
-.field input,.field textarea{
-  width:100%;font-family:var(--sans);font-size:13.5px;color:var(--abyss);
-  padding:10px 12px;border:1px solid var(--line);border-radius:4px;
-  background:var(--paper);line-height:1.6;resize:vertical;
-}
-.field input:focus,.field textarea:focus{background:var(--white);border-color:var(--tide);outline:none}
-.framework{border:1px solid var(--tide-dim);background:#F7FDFC;border-radius:5px;padding:18px;margin-bottom:18px}
-.framework .fw-head{font-size:13px;font-weight:700;color:#0A6660;margin-bottom:14px}
-
-/* 체크리스트 */
-.check{
-  display:flex;gap:12px;align-items:flex-start;padding:13px 0;
-  border-bottom:1px solid var(--line);cursor:pointer;
-}
-.check:last-child{border-bottom:0}
-.check input{margin-top:3px;width:16px;height:16px;accent-color:var(--tide);flex:none;cursor:pointer}
-.check .ct{font-size:14px;font-weight:600}
-.check .cd{font-size:12.5px;color:var(--mist);margin-top:2px}
-.check input:checked ~ div .ct{color:var(--tide)}
-
-/* 소스 리스트 */
-.src{display:flex;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.src:last-child{border-bottom:0}
-.src .sn{font-size:14px;font-weight:600}
-.src .sd{font-size:12.5px;color:var(--mist);margin-top:2px}
-
-pre{
-  font-family:var(--mono);font-size:11.5px;line-height:1.75;
-  background:var(--abyss);color:#C9D6E4;padding:18px;border-radius:5px;
-  overflow-x:auto;white-space:pre-wrap;word-break:break-word;
-}
-pre .fixed{color:var(--signal)}
-
-.toast{
-  position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);
-  background:var(--abyss);color:var(--white);padding:12px 20px;border-radius:5px;
-  font-size:13.5px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:99;
-  box-shadow:0 8px 28px rgba(11,26,46,.28);
-}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-
-@media(prefers-reduced-motion:reduce){
-  *,*::after{animation:none!important;transition:none!important}
-}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -253,580 +14,85 @@ pre .fixed{color:var(--signal)}
   <div class="mast-inner">
     <div class="eyebrow">2학기 수행평가 · 대기와 해양의 상호작용</div>
     <h1>과학자는 <em>데이터</em>로<br>의사소통한다</h1>
-    <p class="mast-sub">공공데이터를 정량 분석하고, 그 결과를 일반 대중이 이해할 수 있는 웹앱으로 옮기는 프로젝트입니다.</p>
+    <p class="mast-sub">공공데이터를 정량 분석하고, 그 결과를 일반 대중이 이해할 수 있는 웹앱으로 옮기는 프로젝트입니다. 아래 6단계를 따라가며 준비합니다.</p>
     <span class="proto-tag">PROTOTYPE — 연수 공유용 / 일부 화면은 골격만</span>
   </div>
 </header>
 
-<nav class="rail">
-  <div class="rail-inner">
-    <div class="rail-track" role="tablist">
-      <button class="node" role="tab" aria-selected="true" data-p="p1"><span class="node-num">STEP 01</span><span class="node-label">목표와 평가</span></button>
-      <button class="node" role="tab" aria-selected="false" data-p="p2"><span class="node-num">STEP 02</span><span class="node-label">상관과 인과</span></button>
-      <button class="node" role="tab" aria-selected="false" data-p="p3"><span class="node-num">STEP 03</span><span class="node-label">예시로 체험</span></button>
-      <button class="node" role="tab" aria-selected="false" data-p="p4"><span class="node-num">STEP 04</span><span class="node-label">데이터 찾기</span></button>
-      <button class="node" role="tab" aria-selected="false" data-p="p5"><span class="node-num">STEP 05</span><span class="node-label">기획안 쓰기</span></button>
-      <button class="node" role="tab" aria-selected="false" data-p="p6"><span class="node-num">STEP 06</span><span class="node-label">제출 전 점검</span></button>
-    </div>
-  </div>
-</nav>
-
 <main>
-
-<!-- ========== STEP 1 ========== -->
-<section class="panel on" id="p1">
   <div class="phead">
-    <h2>이 프로젝트에서 무엇을 하나요</h2>
-    <p>여러분은 데이터 커뮤니케이터입니다. 대기·해양 관측 데이터를 분석해, 그 주제를 전혀 모르는 사람에게 전달하는 웹앱을 기획하고 만듭니다.</p>
+    <h2>여섯 단계, 자유롭게 오가도 됩니다</h2>
+    <p>아래 순서를 권장하지만 강제하지 않습니다. 장기 프로젝트인 만큼, 언제든 이전 단계로 돌아가 복습해도 좋습니다. 각 페이지 하단에서 이전·다음·메인 페이지로 이동할 수 있습니다.</p>
   </div>
 
-  <div class="grid2">
-    <div class="card">
-      <h3>핵심 질문</h3>
-      <p>숫자로 가득한 관측 데이터를, 과학을 모르는 사람도 이해하고 신뢰하게 만들려면 무엇이 필요한가?</p>
-      <p>내가 고른 데이터는 정말 내 주장을 뒷받침하는가?</p>
-    </div>
-    <div class="card">
-      <h3>기억할 것</h3>
-      <p>좋은 과학 커뮤니케이션은 화려한 기술이 아니라 <strong>정확성 + 명료성 + 읽는 사람에 대한 배려</strong>에서 나옵니다.</p>
-      <p>그래서 이 수행평가는 완성된 웹앱의 디자인보다 <strong>기획 과정</strong>을 더 크게 봅니다.</p>
-    </div>
+  <div class="hubgrid">
+    <a class="hubcard" href="step1.html">
+      <div class="hubnum">01</div>
+      <div>
+        <h3>목표와 평가</h3>
+        <p>이 프로젝트에서 무엇을, 어떻게 평가받는지</p>
+        <span class="hubtime">약 5분</span>
+      </div>
+    </a>
+    <a class="hubcard" href="step2.html">
+      <div class="hubnum">02</div>
+      <div>
+        <h3>상관과 인과</h3>
+        <p>데이터를 읽기 전에 알아야 할 통계 기초</p>
+        <span class="hubtime">약 15분</span>
+      </div>
+    </a>
+    <a class="hubcard" href="step3.html">
+      <div class="hubnum">03</div>
+      <div>
+        <h3>예시로 체험하기</h3>
+        <p>먼저 한 번 만들어보는 15분 미니 실습</p>
+        <span class="hubtime">약 15분</span>
+      </div>
+    </a>
+    <a class="hubcard" href="step4.html">
+      <div class="hubnum">04</div>
+      <div>
+        <h3>데이터 찾기</h3>
+        <p>우리 주제에 맞는 공공데이터 고르기</p>
+        <span class="hubtime">약 10분</span>
+      </div>
+    </a>
+    <a class="hubcard" href="step5.html">
+      <div class="hubnum">05</div>
+      <div>
+        <h3>기획안 쓰기</h3>
+        <p>모둠에서 함께 작성하고 제출하기</p>
+        <span class="hubtime">약 40분</span>
+      </div>
+    </a>
+    <a class="hubcard" href="step6.html">
+      <div class="hubnum">06</div>
+      <div>
+        <h3>제출 전 점검</h3>
+        <p>내기 전에 스스로 확인하기</p>
+        <span class="hubtime">약 5분</span>
+      </div>
+    </a>
   </div>
 
-  <div class="card">
-    <h3>평가 기준 <span class="badge b-todo">세부 배점 확정 예정</span></h3>
+  <div class="card" style="margin-top:24px">
+    <h3>이 프로젝트가 끝나면 제출하는 것</h3>
     <table>
-      <thead><tr><th>영역</th><th>무엇을 보나</th></tr></thead>
+      <thead><tr><th>제출물</th><th>시점</th><th>역할</th></tr></thead>
       <tbody>
-        <tr><td>과학적 타당성</td><td>데이터 출처의 신뢰도, 분석 방법의 적절성, 교과 내용과의 연결</td></tr>
-        <tr><td>기획의 구체성</td><td>읽는 사람 설정, 전달 메시지의 명확성, 화면 구성의 논리</td></tr>
-        <tr><td>데이터 리터러시</td><td>원자료를 가공한 흔적, 시각화 선택의 근거, 상관과 인과의 구분</td></tr>
-        <tr><td>의사소통 효과성</td><td>비전문가 기준 이해 가능성, 과장이나 왜곡 없는 정직한 표현</td></tr>
-        <tr><td>완성도 <span class="badge b-open">가중치 낮음</span></td><td>최종 웹앱의 기능과 디자인</td></tr>
+        <tr><td>① 기획안 PDF</td><td>2차시</td><td>기획 구체성·타당성 평가, 교사 피드백 근거</td></tr>
+        <tr><td>② 결과 보고서 PDF</td><td>4차시</td><td>완성 웹앱 스크린샷 + 분석 결과 + 기획과 달라진 점</td></tr>
+        <tr><td>③ 웹앱 파일 일체</td><td>4차시</td><td>코드 + 배포 링크</td></tr>
       </tbody>
     </table>
   </div>
-
-  <div class="card">
-    <h3>4차시 일정</h3>
-    <div class="tl">
-      <div class="tl-item"><div class="h">1차시</div><div class="t">방향 잡기</div><div class="d">목표·평가 기준 확인 → 데이터 함정 학습 → 예시 미니 실습 → 모둠·주제 정하기</div></div>
-      <div class="tl-item"><div class="h">2차시</div><div class="t">기획안 쓰기</div><div class="d">데이터 소스 탐색 → 기획안 작성 → PDF·프롬프트 내려받아 제출</div></div>
-      <div class="tl-item"><div class="h">3차시</div><div class="t">만들기</div><div class="d">교사 피드백 반영 → 프롬프트로 웹앱 제작 착수</div></div>
-      <div class="tl-item"><div class="h">4차시</div><div class="t">공유하기</div><div class="d">제작 마무리 → 갤러리워크로 서로의 웹앱 살펴보고 의견 남기기</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== STEP 2 ========== -->
-<section class="panel" id="p2">
-  <div class="phead">
-    <h2>상관과 인과, 기초부터 차근차근</h2>
-    <p>딱 하나만 짚고 넘어갑니다. <strong>"함께 움직인다"</strong>와 <strong>"하나가 다른 하나를 일으킨다"</strong>는 다른 이야기라는 것. 이 페이지가 끝날 때쯤엔 왜 그런지 스스로 설명할 수 있게 됩니다.</p>
-  </div>
-
-  <!-- 0. 도입 발문 -->
-  <div class="chartbox" style="margin-bottom:18px">
-    <div class="chart-head">
-      <div>
-        <div class="chart-title">전지구 평균기온과 대기 중 CO₂ 농도 <span class="badge b-live">1980–2023 예시 자료</span></div>
-        <div style="font-size:12px;color:var(--mist);margin-top:3px">두 값이 거의 같이 움직입니다 — 상관계수 r ≈ 0.97 (매우 강한 양의 상관)</div>
-      </div>
-    </div>
-    <svg id="co2Scatter" viewBox="0 0 620 250" role="img" aria-label="기온과 CO2 농도 산점도"></svg>
-    <div class="verdict v-bad">이렇게 딱 맞아떨어지는데, <strong>"CO₂가 기온을 올린 원인이다"라고 지금 바로 말해도 될까요?</strong> 아래 세 단계를 거치고 나서 다시 판단해봅시다.</div>
-  </div>
-
-  <!-- 1단계. 상관 감잡기 -->
-  <div class="chartbox" style="margin-bottom:18px">
-    <div class="chart-head">
-      <div>
-        <div class="chart-title">1단계 · 상관, 숫자보다 먼저 눈으로</div>
-        <div style="font-size:12px;color:var(--mist);margin-top:3px">점이 흩어진 모양을 보면 상관의 세기가 보입니다</div>
-      </div>
-      <div class="toggle" role="group" aria-label="상관 세기 예시 전환">
-        <button data-corr="strong" aria-pressed="true">강한 상관</button>
-        <button data-corr="mid" aria-pressed="false">약한 상관</button>
-        <button data-corr="none" aria-pressed="false">상관 없음</button>
-      </div>
-    </div>
-    <svg id="corrScatter" viewBox="0 0 620 230" role="img" aria-label="상관 세기별 산점도 예시"></svg>
-    <p style="font-size:13px;color:var(--slate);margin-top:12px" id="corrCaption">점들이 <strong>한 방향으로 나란히</strong> 늘어설수록 상관이 강합니다. r 값(−1~1)은 이 "나란한 정도"를 숫자로 옮긴 것일 뿐, 그 이상도 이하도 아닙니다.</p>
-  </div>
-
-  <!-- 2단계, 3단계 -->
-  <div class="grid2">
-    <div class="card">
-      <h3>2단계 · 상관은 인과가 아니다</h3>
-      <p>아이스크림 판매량과 물놀이 사고 건수는 여름마다 함께 올라갑니다. 그렇다고 아이스크림이 사고를 일으키는 건 아닙니다.</p>
-      <p style="margin-top:9px">둘 다 <strong>여름철 기온</strong>이라는, 눈에 잘 안 띄는 제3의 원인(교란변수)을 함께 따라갈 뿐입니다.</p>
-      <div class="note"><strong>스스로 물어볼 것</strong> — 내가 찾은 두 변수를 동시에 움직이는, 숨은 공통 원인이 있지는 않은가?</div>
-    </div>
-    <div class="card">
-      <h3>3단계 · R², "설명한다"는 것의 의미</h3>
-      <p>추세선을 그리면 R²라는 값이 함께 나옵니다. 이 선이 데이터의 변화를 <strong>얼마나 잘 따라가는지</strong> 0~1 사이 숫자로 나타낸 것입니다.</p>
-      <div style="display:flex;align-items:center;gap:16px;margin-top:12px">
-        <svg width="68" height="68" viewBox="0 0 72 72" aria-hidden="true">
-          <circle cx="36" cy="36" r="30" fill="none" stroke="#DCE3EA" stroke-width="8"/>
-          <circle cx="36" cy="36" r="30" fill="none" stroke="#00A79D" stroke-width="8" stroke-dasharray="188.4" stroke-dashoffset="17" stroke-linecap="round" transform="rotate(-90 36 36)"/>
-          <text x="36" y="41" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" font-weight="700" fill="#0B1A2E">0.91</text>
-        </svg>
-        <p style="font-size:13px;color:var(--slate);flex:1">R²=0.91은 "잘 따라간다"는 뜻이지, <strong>"왜 그런지"는 알려주지 않습니다.</strong> 값이 높다고 원인이 증명된 것은 아닙니다.</p>
-      </div>
-      <div class="note"><strong>스스로 물어볼 것</strong> — 내가 그린 추세선이 무엇을 뜻하는지 한 문장으로 설명할 수 있는가?</div>
-    </div>
-  </div>
-
-  <!-- 다시 도입 질문으로 -->
-  <div class="card" style="border-color:var(--tide-dim);background:#F7FDFC">
-    <h3>다시, 처음 질문으로</h3>
-    <p>r ≈ 0.97은 기온과 CO₂ 농도가 <strong>강하게 함께 움직였다</strong>는 사실을 보여줄 뿐, 그 자체로 원인을 증명하지는 않습니다. 실제로 CO₂가 원인이라는 결론은 이 상관관계 하나가 아니라, 물리·화학적 원리(온실효과)와 다른 여러 증거가 함께 뒷받침해서 나온 것입니다. <strong>상관은 출발점이지 결론이 아닙니다.</strong></p>
-  </div>
-
-  <!-- 4단계. 표본/기간 -->
-  <div class="grid2">
-    <div class="card">
-      <h3>4단계 · 짧은 구간으로 단정하지 않기</h3>
-      <p>3년치 자료에서 기온이 내려갔다고 해서 장기 추세가 꺾인 것은 아닙니다. 자연 변동은 짧은 기간에 크게 요동칩니다.</p>
-      <div class="note"><strong>스스로 물어볼 것</strong> — 내 데이터 기간은 결론을 말하기에 충분히 긴가?</div>
-    </div>
-    <div class="card">
-      <h3>5단계 · 원하는 구간만 잘라 쓰지 않기</h3>
-      <p>결론에 맞는 연도만 골라내면 어떤 주장이든 만들 수 있습니다. 이것이 체리피킹이고, 신뢰를 가장 쉽게 잃는 방법입니다.</p>
-      <div class="note"><strong>스스로 물어볼 것</strong> — 내가 뺀 데이터가 있다면, 왜 뺐는지 설명할 수 있는가?</div>
-    </div>
-  </div>
-
-  <!-- 6단계. 그래프 왜곡 (기존 데모 유지) -->
-  <div class="chartbox" style="margin-top:18px">
-    <div class="chart-head">
-      <div>
-        <div class="chart-title">6단계 · 그래프도 거짓말을 할 수 있다</div>
-        <div style="font-size:12px;color:var(--mist);margin-top:3px">연습용 학급 설문 데이터 · 물복 62명 / 딱복 51명</div>
-      </div>
-      <div class="toggle" role="group" aria-label="그래프 표현 방식">
-        <button id="tgA" aria-pressed="true">축 자르기</button>
-        <button id="tgB" aria-pressed="false">0부터 그리기</button>
-      </div>
-    </div>
-    <svg id="distortChart" viewBox="0 0 620 260" role="img" aria-label="물복 딱복 선호 비교 막대그래프"></svg>
-    <div class="verdict v-bad" id="verdictBox"></div>
-  </div>
-
-  <div class="card">
-    <h3>실제 왜곡 사례 모음 <span class="badge b-todo">사례 추가 예정</span></h3>
-    <p>언론 보도나 홍보 자료에서 실제로 쓰인 그래프 왜곡 사례 2~3건을 비교 이미지로 넣을 예정입니다. 3차원 파이차트, 축 뒤집기, 면적 왜곡 등을 다룹니다.</p>
-  </div>
-</section>
-
-<!-- ========== STEP 3 ========== -->
-<section class="panel" id="p3">
-  <div class="phead">
-    <h2>먼저 한 번 만들어봅니다 <span class="badge b-live" style="vertical-align:middle">15분 미니 실습</span></h2>
-    <p>여러분이 오늘 응답한 설문 데이터로 만든 예시입니다. 아래 기획안과 프롬프트를 그대로 복사해 AI 도구에 넣어보세요. 기획안이 어떻게 웹앱이 되는지 먼저 겪어보는 것이 목적입니다.</p>
-  </div>
-
-  <div class="note">
-    <strong>이 예시는 연습용입니다.</strong> 지구과학 내용이 아니라 <em>데이터를 다루는 방법</em>을 익히기 위한 것입니다. 여러분의 실제 주제는 4단계에서 고릅니다.
-  </div>
-
-  <div class="chartbox" style="margin:18px 0">
-    <div class="chart-head">
-      <div>
-        <div class="chart-title">MBTI 성향별 복숭아 선호 <span class="badge b-live">더미 데이터</span></div>
-        <div style="font-size:12px;color:var(--mist);margin-top:3px">실제 설문 연동 시 이 자리에 실시간 응답이 들어옵니다</div>
-      </div>
-      <button class="btn ghost" id="refreshBtn" style="padding:7px 14px;font-size:12.5px">새로고침</button>
-    </div>
-    <svg id="crossChart" viewBox="0 0 620 250" role="img" aria-label="MBTI 성향별 복숭아 선호 비교"></svg>
-    <div class="verdict v-ok">E와 I 사이의 차이는 몇 %p 수준입니다. 이 정도 차이는 표본이 100명 남짓일 때 우연히도 충분히 나타납니다. <strong>"차이가 없다"는 것도 정직한 결과입니다.</strong></div>
-  </div>
-
-  <div class="grid2">
-    <div class="card">
-      <h3>작은 집단은 가립니다</h3>
-      <p>반별 × MBTI 유형처럼 잘게 나누면, 해당하는 사람이 3~4명뿐인 칸이 생깁니다. 학급 규모에서는 이것만으로 누구인지 짐작될 수 있습니다.</p>
-      <table style="margin-top:12px">
-        <thead><tr><th>구분</th><th>응답</th><th>표시</th></tr></thead>
-        <tbody>
-          <tr><td>E · 물복</td><td>30명</td><td style="color:var(--tide)">공개</td></tr>
-          <tr><td>I · 딱복</td><td>23명</td><td style="color:var(--tide)">공개</td></tr>
-          <tr><td>1반 · ENFP</td><td>3명</td><td style="color:var(--signal)">데이터 부족 — 가림</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card">
-      <h3>이 웹앱이 지킨 것</h3>
-      <p>· 이름, 학번, 이메일을 한 건도 받지 않았습니다.<br>
-      · 원본 응답 시트가 아니라, 개인정보를 지운 <strong>공개용 시트</strong>만 불러옵니다.<br>
-      · 코드 어디에도 인증키가 없습니다. 누구나 열 수 있는 공개 주소만 씁니다.<br>
-      · 응답자가 5명 미만인 조합은 자동으로 가립니다.</p>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>이 예시의 기획안 요약</h3>
-    <table>
-      <tbody>
-        <tr><td style="width:110px">관찰</td><td>복숭아 취향이 성격과 관련 있다는 속설이 있다</td></tr>
-        <tr><td>연결</td><td>우리는 자주 데이터 없이 느낌만으로 관계를 믿는다</td></tr>
-        <tr><td>임팩트</td><td>직접 세어보면 속설이 맞는지 우연인지 구분할 수 있다</td></tr>
-        <tr><td>요청</td><td>그럴듯한 이야기를 만나면, 먼저 숫자를 확인해보자</td></tr>
-      </tbody>
-    </table>
-    <div class="btnrow">
-      <button class="btn tide" data-copy="demo">이 기획안의 프롬프트 복사하기</button>
-      <button class="btn ghost" data-toast="AI 도구에 붙여넣은 뒤, 결과 화면을 이 예시와 비교해보세요.">다음에 할 일 보기</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>복사될 프롬프트 미리보기</h3>
-<pre>대기·해양 단원 수행평가용 데이터 시각화 웹앱을 만들어줘.
-
-[주제] 학급 설문 데이터로 "복숭아 취향과 성격은 관련 있을까" 검증하기
-[전달 메시지] 그럴듯한 이야기를 만나면 먼저 데이터를 확인하자
-[읽는 사람] 통계를 배우지 않은 일반인
-[데이터] 아래 공개 CSV 주소에서 불러올 것 (인증 불필요)
-[분석] 전체 비율 집계 → E/I 교차 비교 → 표본 크기의 한계 설명
-[시각화] 막대그래프 사용. 파이차트는 쓰지 말 것.
-[화면] 홈 / 전체 결과 / 교차 분석 / 함정 주의 / 마무리 메시지
-
-<span class="fixed">[반드시 지킬 것]
-- 방문자의 개인정보를 수집하지 않는다. 로그인, 이름·이메일 입력,
-  위치추적 기능을 넣지 않는다.
-- 코드 안에 API 키, 토큰, 비밀번호를 절대 하드코딩하지 않는다.
-- 인증키가 필요한 외부 API를 쓰지 말고, 공개된 CSV나 내장된
-  정적 데이터만 사용한다.
-- 응답자가 5명 미만인 조합은 "데이터 부족"으로 표시하고 수치를 가린다.
-- 그래프의 세로축은 0에서 시작한다.</span></pre>
-    <p style="margin-top:12px;font-size:12.5px;color:var(--mist)">주황색 부분은 여러분이 어떤 주제를 고르든 <strong>자동으로 붙는 공통 규칙</strong>입니다.</p>
-  </div>
-</section>
-
-<!-- ========== STEP 4 ========== -->
-<section class="panel" id="p4">
-  <div class="phead">
-    <h2>어떤 데이터를 쓸까</h2>
-    <p>인증키 없이 바로 내려받을 수 있는 데이터를 우선 추천합니다. 키가 필요한 자료는 배포할 때 위험해지기 때문입니다.</p>
-  </div>
-
-  <div class="card">
-    <h3>주제 범위 <span class="badge b-open">동료 피드백 후 확정</span></h3>
-    <div class="grid2" style="margin-top:6px">
-      <div style="border:1px solid var(--line);border-radius:4px;padding:16px">
-        <div style="font-size:14px;font-weight:700;margin-bottom:8px">A · 기후변화로 한정</div>
-        <p style="font-size:13px;color:var(--slate)">메시지 설계가 자연스럽고 평가 기준이 통일됩니다. 대신 모둠끼리 결과물이 비슷해질 수 있습니다.</p>
-      </div>
-      <div style="border:1px solid var(--tide-dim);background:#F7FDFC;border-radius:4px;padding:16px">
-        <div style="font-size:14px;font-weight:700;margin-bottom:8px">B · 대기·해양 전체</div>
-        <p style="font-size:13px;color:var(--slate)">태풍, 해류, 엘니뇨까지 고를 수 있어 관심사에 맞습니다. 대신 "왜 알아야 하는가"를 스스로 설계해야 합니다.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>추천 데이터 소스 <span class="badge b-todo">주소·난이도 확정 예정</span></h3>
-    <div class="src"><div><div class="sn">기상청 기상자료개방포털</div><div class="sd">기온·강수·태풍 관측 자료 · CSV 직접 내려받기</div></div><span class="badge b-live">키 불필요</span></div>
-    <div class="src"><div><div class="sn">국립해양조사원 해양관측</div><div class="sd">수온·염분·조위 관측 자료</div></div><span class="badge b-live">키 불필요</span></div>
-    <div class="src"><div><div class="sn">NOAA 공개 데이터셋</div><div class="sd">엘니뇨 지수, 장기 해수면 온도 시계열</div></div><span class="badge b-live">키 불필요</span></div>
-    <div class="src"><div><div class="sn">국가통계포털 KOSIS</div><div class="sd">국내 환경·기후 관련 통계</div></div><span class="badge b-live">키 불필요</span></div>
-    <div class="src"><div><div class="sn">공공데이터포털 Open API</div><div class="sd">실시간 자료가 많지만 인증키가 필요합니다</div></div><span class="badge b-todo">권장하지 않음</span></div>
-  </div>
-
-  <div class="card">
-    <h3>키가 필요한 자료를 꼭 쓰고 싶다면</h3>
-    <p>기획 단계에서 <strong>한 번만</strong> 내려받아 CSV로 저장하고, 그 파일을 웹앱에 넣으세요. 배포되는 코드에는 키가 들어가지 않습니다.</p>
-    <p>이때 데이터는 그 시점에 고정되는데, 이건 문제가 아닙니다. "O월 O일 기준 자료를 분석했다"고 밝히면 오히려 더 정직한 설명이 됩니다.</p>
-  </div>
-</section>
-
-<!-- ========== STEP 5 ========== -->
-<section class="panel" id="p5">
-  <div class="phead">
-    <h2>기획안 작성</h2>
-    <p>여기서 쓴 내용이 그대로 제출용 PDF가 되고, 동시에 AI에게 줄 프롬프트로 바뀝니다. 아래는 예시로 미리 채워둔 상태입니다.</p>
-  </div>
-
-  <div class="framework">
-    <div class="fw-head">전달하고 싶은 메시지 — 네 단계로 정리하기</div>
-    <div class="field">
-      <label>관찰 <span class="hint">데이터가 보여주는 현상은?</span></label>
-      <input value="최근 30년간 한반도 주변 해역의 표층 수온이 뚜렷하게 상승했다">
-    </div>
-    <div class="field">
-      <label>연결 <span class="hint">우리 삶과 사회에 어떤 영향을 주는가?</span></label>
-      <input value="어획 어종이 바뀌고, 여름철 고수온 피해가 늘어난다">
-    </div>
-    <div class="field">
-      <label>임팩트 <span class="hint">대중이 이 사실을 알면 무엇이 달라지는가?</span></label>
-      <input value="기후변화를 먼 미래가 아니라 지금 우리 바다의 문제로 인식하게 된다">
-    </div>
-    <div class="field" style="margin-bottom:0">
-      <label>요청 <span class="hint">과학자로서 대중에게 무엇을 부탁하고 싶은가?</span></label>
-      <input value="바다 수온 변화 소식을 접할 때, 몇 년치 자료인지 확인하고 읽어주세요">
-    </div>
-  </div>
-
-  <div class="grid2">
-    <div class="card">
-      <h3>데이터</h3>
-      <div class="field"><label>출처와 주소</label><input value="기상청 기상자료개방포털 · 해양 표층수온 관측자료"></div>
-      <div class="field"><label>기간과 변수</label><input value="1994–2023년 / 월평균 표층수온"></div>
-      <div class="field" style="margin-bottom:0"><label>분석 계획</label><textarea rows="3">연도별 평균 수온 산출 → 선형 추세선으로 상승률 계산 → 계절별로 나누어 여름철 상승폭 비교</textarea></div>
-    </div>
-    <div class="card">
-      <h3>화면과 표현</h3>
-      <div class="field"><label>읽는 사람</label><input value="해양 과학을 배운 적 없는 성인 일반인"></div>
-      <div class="field"><label>시각화 계획과 이유</label><textarea rows="2">시계열 꺾은선 그래프. 세로축은 0이 아닌 실제 수온 범위를 쓰되, 축 범위를 명시해 왜곡을 방지</textarea></div>
-      <div class="field" style="margin-bottom:0"><label>화면 구성</label><textarea rows="2">홈 → 30년 수온 변화 → 계절별 비교 → 우리 밥상의 변화 → 마무리 요청</textarea></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>모둠 역할 분담</h3>
-    <div class="field" style="margin-bottom:0"><textarea rows="2">데이터 수집·정제 / 분석·시각화 설계 / 메시지·화면 구성 — 각자 담당을 적고, 모두가 최종 검토에 참여합니다</textarea></div>
-  </div>
-
-  <div class="btnrow">
-    <button class="btn" data-toast="제출용 PDF 내려받기 — 프로토타입에서는 동작하지 않습니다">제출용 PDF 내려받기</button>
-    <button class="btn tide" data-toast="AI용 프롬프트 내려받기 — 프로토타입에서는 동작하지 않습니다">AI용 프롬프트 내려받기</button>
-    <span style="font-size:12px;color:var(--mist);align-self:center">두 형식으로 나옵니다</span>
-  </div>
-</section>
-
-<!-- ========== STEP 6 ========== -->
-<section class="panel" id="p6">
-  <div class="phead">
-    <h2>제출 전 스스로 확인하기</h2>
-    <p>웹앱을 내기 전에 아래 항목을 직접 확인하세요. 하나라도 확신이 없다면 그 부분을 먼저 고쳐야 합니다.</p>
-  </div>
-
-  <div class="card">
-    <h3>과학적으로 정직한가</h3>
-    <label class="check"><input type="checkbox"><div><div class="ct">데이터의 출처와 기간을 화면에 밝혔다</div><div class="cd">누가, 언제, 어떻게 측정한 자료인지 읽는 사람이 알 수 있어야 합니다</div></div></label>
-    <label class="check"><input type="checkbox"><div><div class="ct">상관관계를 인과관계처럼 쓰지 않았다</div><div class="cd">"때문에"라는 표현을 썼다면, 근거가 있는지 다시 확인하세요</div></div></label>
-    <label class="check"><input type="checkbox"><div><div class="ct">유리한 구간만 잘라 쓰지 않았다</div><div class="cd">뺀 데이터가 있다면 왜 뺐는지 설명할 수 있어야 합니다</div></div></label>
-    <label class="check"><input type="checkbox"><div><div class="ct">AI가 계산한 수치를 원자료와 대조해 확인했다</div><div class="cd">AI는 그럴듯한 숫자를 틀리게 만들어내기도 합니다</div></div></label>
-  </div>
-
-  <div class="card">
-    <h3>안전하게 만들었는가</h3>
-    <label class="check"><input type="checkbox"><div><div class="ct">코드 안에 인증키나 비밀번호가 적혀 있지 않다</div><div class="cd">key, token, secret 같은 단어를 검색해 직접 확인하세요</div></div></label>
-    <label class="check"><input type="checkbox"><div><div class="ct">방문자의 개인정보를 받는 기능이 없다</div><div class="cd">로그인, 이름·이메일 입력창, 위치 요청이 없어야 합니다</div></div></label>
-    <label class="check"><input type="checkbox"><div><div class="ct">쓴 이미지와 아이콘의 출처가 분명하다</div><div class="cd">무료 라이선스 자료를 쓰거나 출처를 표기하세요</div></div></label>
-  </div>
-
-  <div class="card">
-    <h3>읽는 사람에게 닿는가</h3>
-    <label class="check"><input type="checkbox"><div><div class="ct">이 주제를 모르는 사람에게 보여주고 이해되는지 확인했다</div><div class="cd">모둠 밖의 친구 한 명에게 30초만 보여주고 물어보세요</div></div></label>
-    <label class="check"><input type="checkbox"><div><div class="ct">마지막에 전하고 싶은 요청이 분명히 드러난다</div><div class="cd">정보 나열로 끝나지 않아야 합니다</div></div></label>
-  </div>
-
-  <div class="card">
-    <h3>갤러리워크에서 서로 볼 것 <span class="badge b-todo">상호평가지 확정 예정</span></h3>
-    <p>다른 모둠의 웹앱을 보며 남길 의견: 데이터 출처가 분명한가 · 그래프가 주장을 실제로 뒷받침하는가 · 모르는 사람도 이해할 수 있는가 · 가장 인상 깊은 점과 개선할 점</p>
-  </div>
-</section>
-
 </main>
 
-<div class="toast" id="toast"></div>
+<footer style="max-width:900px;margin:0 auto;padding:0 28px 60px;color:var(--mist);font-size:12px">
+  2학기 지구과학 수행평가 · 대기와 해양의 상호작용 프로토타입
+</footer>
 
-<script>
-(function(){
-  /* ---------- 탭 전환 ---------- */
-  var nodes = document.querySelectorAll('.node');
-  nodes.forEach(function(n){
-    n.addEventListener('click', function(){
-      nodes.forEach(function(x){ x.setAttribute('aria-selected','false'); });
-      n.setAttribute('aria-selected','true');
-      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('on'); });
-      document.getElementById(n.dataset.p).classList.add('on');
-      window.scrollTo({top:0, behavior:'smooth'});
-      if(n.dataset.p === 'p2'){ drawDistort(); drawCo2Scatter(); drawCorrScatter(); }
-      if(n.dataset.p === 'p3') drawCross();
-    });
-  });
-
-  /* ---------- 토스트 ---------- */
-  var toastEl = document.getElementById('toast'), tTimer;
-  function toast(msg){
-    toastEl.textContent = msg;
-    toastEl.classList.add('show');
-    clearTimeout(tTimer);
-    tTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2600);
-  }
-  document.querySelectorAll('[data-toast]').forEach(function(b){
-    b.addEventListener('click', function(){ toast(b.dataset.toast); });
-  });
-  document.querySelectorAll('[data-copy]').forEach(function(b){
-    b.addEventListener('click', function(){ toast('프롬프트를 복사했습니다 — AI 도구에 붙여넣으세요'); });
-  });
-
-  /* ---------- 왜곡 차트 ---------- */
-  var distortMode = 'cut';
-  var dData = [{k:'물복', v:62, c:'#00A79D'}, {k:'딱복', v:51, c:'#132a45'}];
-
-  function drawDistort(){
-    var svg = document.getElementById('distortChart');
-    var W=620, H=260, pad={t:24,r:24,b:52,l:56};
-    var plotH = H - pad.t - pad.b, plotW = W - pad.l - pad.r;
-    var yMin = distortMode==='cut' ? 45 : 0;
-    var yMax = 70;
-    var s='';
-    // 눈금
-    var ticks=4;
-    for(var i=0;i<=ticks;i++){
-      var val = yMin + (yMax-yMin)*i/ticks;
-      var y = pad.t + plotH - plotH*i/ticks;
-      s += '<line class="axis-line" x1="'+pad.l+'" y1="'+y+'" x2="'+(W-pad.r)+'" y2="'+y+'"/>';
-      s += '<text class="axis-txt" x="'+(pad.l-10)+'" y="'+(y+4)+'" text-anchor="end">'+Math.round(val)+'</text>';
-    }
-    var bw = 108, gap = plotW/dData.length;
-    dData.forEach(function(d,i){
-      var frac = Math.max(0,(d.v-yMin)/(yMax-yMin));
-      var h = plotH*frac;
-      var x = pad.l + gap*i + (gap-bw)/2;
-      var y = pad.t + plotH - h;
-      s += '<rect class="bar" x="'+x+'" y="'+y+'" width="'+bw+'" height="'+h+'" fill="'+d.c+'" rx="2"/>';
-      s += '<text class="bar-val" x="'+(x+bw/2)+'" y="'+(y-8)+'" text-anchor="middle">'+d.v+'명</text>';
-      s += '<text class="bar-lab" x="'+(x+bw/2)+'" y="'+(H-pad.b+24)+'" text-anchor="middle">'+d.k+'</text>';
-    });
-    s += '<text class="axis-txt" x="'+pad.l+'" y="16">응답 수 (명)</text>';
-    svg.innerHTML = s;
-
-    var vb = document.getElementById('verdictBox');
-    if(distortMode==='cut'){
-      vb.className = 'verdict v-bad';
-      vb.innerHTML = '세로축이 45에서 시작합니다. 실제 차이는 11명인데, 물복이 <strong>세 배 넘게</strong> 많아 보입니다. 숫자는 하나도 조작하지 않았습니다.';
-    }else{
-      vb.className = 'verdict v-ok';
-      vb.innerHTML = '세로축을 0에서 시작하니 실제 비율이 보입니다. 물복이 조금 더 많지만, <strong>압도적이라고 말할 수준은 아닙니다.</strong>';
-    }
-  }
-  document.getElementById('tgA').addEventListener('click', function(){
-    distortMode='cut';
-    this.setAttribute('aria-pressed','true');
-    document.getElementById('tgB').setAttribute('aria-pressed','false');
-    drawDistort();
-  });
-  document.getElementById('tgB').addEventListener('click', function(){
-    distortMode='full';
-    this.setAttribute('aria-pressed','true');
-    document.getElementById('tgA').setAttribute('aria-pressed','false');
-    drawDistort();
-  });
-
-  /* ---------- 교차 차트 ---------- */
-  var cData = [
-    {g:'E 성향', a:30, b:28},
-    {g:'I 성향', a:32, b:23}
-  ];
-  function drawCross(){
-    var svg = document.getElementById('crossChart');
-    var W=620,H=250,pad={t:34,r:24,b:52,l:56};
-    var plotH=H-pad.t-pad.b, plotW=W-pad.l-pad.r, yMax=40;
-    var s='';
-    for(var i=0;i<=4;i++){
-      var y = pad.t + plotH - plotH*i/4;
-      s += '<line class="axis-line" x1="'+pad.l+'" y1="'+y+'" x2="'+(W-pad.r)+'" y2="'+y+'"/>';
-      s += '<text class="axis-txt" x="'+(pad.l-10)+'" y="'+(y+4)+'" text-anchor="end">'+(yMax*i/4)+'</text>';
-    }
-    var gap = plotW/cData.length, bw=54;
-    cData.forEach(function(d,i){
-      [[d.a,'#00A79D','물복'],[d.b,'#132a45','딱복']].forEach(function(p,j){
-        var h = plotH*(p[0]/yMax);
-        var x = pad.l + gap*i + (gap-(bw*2+14))/2 + j*(bw+14);
-        var y = pad.t + plotH - h;
-        s += '<rect class="bar" x="'+x+'" y="'+y+'" width="'+bw+'" height="'+h+'" fill="'+p[1]+'" rx="2"/>';
-        s += '<text class="bar-val" x="'+(x+bw/2)+'" y="'+(y-7)+'" text-anchor="middle">'+p[0]+'</text>';
-      });
-      s += '<text class="bar-lab" x="'+(pad.l+gap*i+gap/2)+'" y="'+(H-pad.b+24)+'" text-anchor="middle">'+d.g+'</text>';
-    });
-    s += '<rect x="'+pad.l+'" y="8" width="10" height="10" fill="#00A79D" rx="1"/><text class="axis-txt" x="'+(pad.l+16)+'" y="17">물복</text>';
-    s += '<rect x="'+(pad.l+62)+'" y="8" width="10" height="10" fill="#132a45" rx="1"/><text class="axis-txt" x="'+(pad.l+78)+'" y="17">딱복</text>';
-    s += '<text class="axis-txt" x="'+(W-pad.r)+'" y="17" text-anchor="end">단위: 명</text>';
-    svg.innerHTML = s;
-  }
-  document.getElementById('refreshBtn').addEventListener('click', function(){
-    cData.forEach(function(d){
-      d.a = Math.max(18, Math.min(38, d.a + Math.round((Math.random()-.5)*6)));
-      d.b = Math.max(18, Math.min(38, d.b + Math.round((Math.random()-.5)*6)));
-    });
-    drawCross();
-    toast('새 응답을 불러왔습니다 — 실제 설문 연동 시 이렇게 갱신됩니다');
-  });
-
-  /* ---------- CO2-기온 산점도 (도입 발문) ---------- */
-  var co2Pts = (function(){
-    // 1980~2023, CO2 340→420ppm / 기온편차 0.1→1.05, 약간의 잡음으로 r≈0.97 재현
-    var pts=[], seed=[0.4,-0.3,0.6,-0.5,0.2,0.7,-0.6,0.3,-0.2,0.5,-0.4,0.1,0.6,-0.3,0.4,-0.5,0.2,0.5,-0.2,0.3,-0.4,0.6,0.1,-0.3,0.5,-0.6,0.2,0.4,-0.1,0.3,-0.5,0.4,-0.2,0.6,-0.3,0.1,0.5,-0.4,0.2,-0.1,0.3,-0.2,0.1];
-    for(var i=0;i<44;i++){
-      var t=i/43;
-      var co2=340+t*80+seed[i]*2.2;
-      var temp=0.12+t*0.95+seed[i]*0.05;
-      pts.push([co2,temp]);
-    }
-    return pts;
-  })();
-  function drawCo2Scatter(){
-    var svg=document.getElementById('co2Scatter'); if(!svg) return;
-    var W=620,H=250,pad={t:20,r:24,b:44,l:52};
-    var xMin=335,xMax=425,yMin=0,yMax=1.2;
-    var plotW=W-pad.l-pad.r, plotH=H-pad.t-pad.b;
-    function px(v){ return pad.l + plotW*(v-xMin)/(xMax-xMin); }
-    function py(v){ return pad.t + plotH - plotH*(v-yMin)/(yMax-yMin); }
-    var s='';
-    for(var i=0;i<=4;i++){
-      var y = pad.t+plotH-plotH*i/4;
-      s+='<line class="axis-line" x1="'+pad.l+'" y1="'+y+'" x2="'+(W-pad.r)+'" y2="'+y+'"/>';
-      s+='<text class="axis-txt" x="'+(pad.l-10)+'" y="'+(y+4)+'" text-anchor="end">'+(yMax*i/4).toFixed(1)+'</text>';
-    }
-    co2Pts.forEach(function(p){
-      s+='<circle cx="'+px(p[0]).toFixed(1)+'" cy="'+py(p[1]).toFixed(1)+'" r="4" fill="#00A79D" opacity="0.72"/>';
-    });
-    s+='<text class="axis-txt" x="'+pad.l+'" y="16">기온편차(℃)</text>';
-    s+='<text class="axis-txt" x="'+(W-pad.r)+'" y="'+(H-8)+'" text-anchor="end">CO₂ 농도(ppm) →</text>';
-    svg.innerHTML=s;
-  }
-
-  /* ---------- 상관 세기 데모 ---------- */
-  var corrSets = {
-    strong: { r:'0.95', cap:'점들이 거의 한 줄로 늘어서 있습니다. 하나를 알면 다른 하나가 거의 예측됩니다.', pts:[[8,10],[20,25],[33,30],[45,48],[58,55],[70,68],[15,18],[62,60],[40,42],[28,30],[52,50],[10,15],[65,63],[35,38],[48,45],[22,20]] },
-    mid:    { r:'0.45', cap:'대체로 오른쪽 위로 향하지만 흩어짐이 큽니다. 경향은 있지만 예측력은 약합니다.', pts:[[8,30],[20,15],[33,45],[45,25],[58,55],[70,40],[15,10],[62,60],[40,20],[28,50],[52,35],[10,45],[65,30],[35,60],[48,15],[22,40]] },
-    none:   { r:'0.02', cap:'특별한 방향이 보이지 않습니다. 하나를 알아도 다른 하나를 짐작할 수 없습니다.', pts:[[8,40],[20,12],[33,55],[45,20],[58,48],[70,15],[15,50],[62,25],[40,45],[28,10],[52,58],[10,20],[65,40],[35,15],[48,52],[22,32]] }
-  };
-  var corrMode='strong';
-  function drawCorrScatter(){
-    var svg=document.getElementById('corrScatter'); if(!svg) return;
-    var d=corrSets[corrMode];
-    var W=620,H=230,pad={t:20,r:24,b:20,l:36};
-    var plotW=W-pad.l-pad.r, plotH=H-pad.t-pad.b;
-    var s='<rect class="axis-line" x="'+pad.l+'" y="'+pad.t+'" width="'+plotW+'" height="'+plotH+'" fill="none"/>';
-    d.pts.forEach(function(p){
-      var x=pad.l+plotW*(p[0]/78), y=pad.t+plotH-plotH*(p[1]/78);
-      s+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="5.5" fill="#132a45" opacity="0.78"/>';
-    });
-    s+='<text x="'+(W-pad.r)+'" y="'+(pad.t+18)+'" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="13" font-weight="700" fill="#00A79D">r ≈ '+d.r+'</text>';
-    svg.innerHTML=s;
-    var cap=document.getElementById('corrCaption');
-    if(cap) cap.innerHTML=d.cap+' <span style="color:var(--mist)">— r 값(−1~1)은 이 "나란한 정도"를 숫자로 옮긴 것일 뿐입니다.</span>';
-  }
-  document.querySelectorAll('[data-corr]').forEach(function(b){
-    b.addEventListener('click', function(){
-      corrMode=b.dataset.corr;
-      document.querySelectorAll('[data-corr]').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
-      b.setAttribute('aria-pressed','true');
-      drawCorrScatter();
-    });
-  });
-
-  drawDistort();
-  drawCross();
-  drawCo2Scatter();
-  drawCorrScatter();
-})();
-</script>
+<script src="script.js"></script>
 </body>
 </html>
