@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STEP 06 · 제출 전 점검</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="crumb">STEP <b>06</b> / 06 · 제출 전 점검</span>
+    <a class="home-link" href="index.html">← 메인 페이지</a>
+  </div>
+</div>
+
+<main>
+  <div class="phead">
+    <h2>제출 전 스스로 확인하기</h2>
+    <p>웹앱을 내기 전에 아래 항목을 직접 확인하세요. 하나라도 확신이 없다면 그 부분을 먼저 고쳐야 합니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>과학적으로 정직한가</h3>
+    <label class="check"><input type="checkbox"><div><div class="ct">데이터의 출처와 기간을 화면에 밝혔다</div><div class="cd">누가, 언제, 어떻게 측정한 자료인지 읽는 사람이 알 수 있어야 합니다</div></div></label>
+    <label class="check"><input type="checkbox"><div><div class="ct">상관관계를 인과관계처럼 쓰지 않았다</div><div class="cd">"때문에"라는 표현을 썼다면, 근거가 있는지 다시 확인하세요</div></div></label>
+    <label class="check"><input type="checkbox"><div><div class="ct">유리한 구간만 잘라 쓰지 않았다</div><div class="cd">뺀 데이터가 있다면 왜 뺐는지 설명할 수 있어야 합니다</div></div></label>
+    <label class="check"><input type="checkbox"><div><div class="ct">AI가 계산한 수치를 원자료와 대조해 확인했다</div><div class="cd">AI는 그럴듯한 숫자를 틀리게 만들어내기도 합니다</div></div></label>
+  </div>
+
+  <div class="card">
+    <h3>안전하게 만들었는가</h3>
+    <label class="check"><input type="checkbox"><div><div class="ct">코드 안에 인증키나 비밀번호가 적혀 있지 않다</div><div class="cd">key, token, secret 같은 단어를 검색해 직접 확인하세요</div></div></label>
+    <label class="check"><input type="checkbox"><div><div class="ct">방문자의 개인정보를 받는 기능이 없다</div><div class="cd">로그인, 이름·이메일 입력창, 위치 요청이 없어야 합니다</div></div></label>
+    <label class="check"><input type="checkbox"><div><div class="ct">쓴 이미지와 아이콘의 출처가 분명하다</div><div class="cd">무료 라이선스 자료를 쓰거나 출처를 표기하세요</div></div></label>
+  </div>
+
+  <div class="card">
+    <h3>읽는 사람에게 닿는가</h3>
+    <label class="check"><input type="checkbox"><div><div class="ct">이 주제를 모르는 사람에게 보여주고 이해되는지 확인했다</div><div class="cd">모둠 밖의 친구 한 명에게 30초만 보여주고 물어보세요</div></div></label>
+    <label class="check"><input type="checkbox"><div><div class="ct">마지막에 전하고 싶은 요청이 분명히 드러난다</div><div class="cd">정보 나열로 끝나지 않아야 합니다</div></div></label>
+  </div>
+
+  <div class="card">
+    <h3>제출물 최종 확인</h3>
+    <table>
+      <tbody>
+        <tr><td>① 기획안 PDF</td><td>2차시에 이미 제출됨</td></tr>
+        <tr><td>② 결과 보고서 PDF</td><td>웹앱 스크린샷 + 분석 결과 + 기획과 달라진 점 포함했는가</td></tr>
+        <tr><td>③ 웹앱 파일 + 배포 링크</td><td>교사 저장소에 모둠 폴더로 제출, 링크 작동 확인했는가</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>갤러리워크에서 서로 볼 것 <span class="badge b-todo">상호평가지 확정 예정</span></h3>
+    <p>다른 모둠의 웹앱을 보며 남길 의견: 데이터 출처가 분명한가 · 그래프가 주장을 실제로 뒷받침하는가 · 모르는 사람도 이해할 수 있는가 · 가장 인상 깊은 점과 개선할 점</p>
+  </div>
+</main>
+
+<nav class="pagenav">
+  <a href="step5.html">← 이전 단계</a>
+  <a href="index.html" class="center" style="border:0;padding:0">메인 페이지</a>
+  <span class="disabled">마지막 단계입니다</span>
+</nav>
+
+<script src="script.js"></script>
+</body>
+</html>

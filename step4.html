@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STEP 04 · 데이터 찾기</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="crumb">STEP <b>04</b> / 06 · 데이터 찾기</span>
+    <a class="home-link" href="index.html">← 메인 페이지</a>
+  </div>
+</div>
+
+<main>
+  <div class="phead">
+    <h2>어떤 데이터를 쓸까</h2>
+    <p>대기·해양 단원 전체 범위에서 주제를 자유롭게 고를 수 있습니다. 인증키 없이 바로 내려받을 수 있는 데이터를 우선 추천합니다 — 키가 필요한 자료는 배포할 때 위험해지기 때문입니다.</p>
+  </div>
+
+  <div class="framework">
+    <div class="fw-head">어떤 주제를 고르든, 이 네 가지는 반드시 채웁니다</div>
+    <p style="font-size:13.5px;color:var(--slate)">관찰 → 연결 → 임팩트 → 요청. 태풍이든 해류든 엘니뇨든, 이 틀에 맞춰 정리하면 "왜 대중이 알아야 하는가"가 자연스럽게 나옵니다. (자세한 작성은 05단계에서)</p>
+  </div>
+
+  <div class="card">
+    <h3>성취기준별 추천 데이터 소스 <span class="badge b-todo">주소·난이도 확정 예정</span></h3>
+    <div class="src">
+      <div>
+        <div class="sn">기상청 기상자료개방포털</div>
+        <div class="sd">기온·강수·태풍 관측 자료 · CSV 직접 내려받기</div>
+        <div class="tags"><span class="tagchip">01-01</span><span class="tagchip">01-04</span></div>
+      </div>
+      <span class="badge b-live">키 불필요</span>
+    </div>
+    <div class="src">
+      <div>
+        <div class="sn">국립해양조사원 해양관측</div>
+        <div class="sd">수온·염분·조위 관측 자료</div>
+        <div class="tags"><span class="tagchip">01-01</span><span class="tagchip">01-02</span></div>
+      </div>
+      <span class="badge b-live">키 불필요</span>
+    </div>
+    <div class="src">
+      <div>
+        <div class="sn">NOAA 공개 데이터셋</div>
+        <div class="sd">엘니뇨 지수, 장기 해수면 온도 시계열</div>
+        <div class="tags"><span class="tagchip">01-02</span><span class="tagchip">01-05</span></div>
+      </div>
+      <span class="badge b-live">키 불필요</span>
+    </div>
+    <div class="src">
+      <div>
+        <div class="sn">국가통계포털 KOSIS</div>
+        <div class="sd">국내 환경·기후 관련 통계</div>
+        <div class="tags"><span class="tagchip">01-06</span></div>
+      </div>
+      <span class="badge b-live">키 불필요</span>
+    </div>
+    <div class="src">
+      <div>
+        <div class="sn">공공데이터포털 Open API</div>
+        <div class="sd">실시간 자료가 많지만 인증키가 필요합니다</div>
+        <div class="tags"><span class="tagchip">전 영역</span></div>
+      </div>
+      <span class="badge b-todo">권장하지 않음</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>키가 필요한 자료를 꼭 쓰고 싶다면</h3>
+    <p>기획 단계에서 <strong>한 번만</strong> 내려받아 CSV로 저장하고, 그 파일을 웹앱에 넣으세요. 배포되는 코드에는 키가 들어가지 않습니다.</p>
+    <p>이때 데이터는 그 시점에 고정되는데, 이건 문제가 아닙니다. "O월 O일 기준 자료를 분석했다"고 밝히면 오히려 더 정직한 설명이 됩니다.</p>
+  </div>
+</main>
+
+<nav class="pagenav">
+  <a href="step3.html">← 이전 단계</a>
+  <a href="index.html" class="center" style="border:0;padding:0">메인 페이지</a>
+  <a href="step5.html">다음 단계 →</a>
+</nav>
+
+<script src="script.js"></script>
+</body>
+</html>

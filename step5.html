@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STEP 05 · 기획안 쓰기</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="crumb">STEP <b>05</b> / 06 · 기획안 쓰기</span>
+    <a class="home-link" href="index.html">← 메인 페이지</a>
+  </div>
+</div>
+
+<main>
+  <div class="phead">
+    <h2>기획안 작성</h2>
+    <p>모둠(2~3인)이 Teams에서 함께 작성한 뒤, 완성된 문서를 여기에 업로드하면 제출용 PDF와 AI 프롬프트로 자동 변환됩니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>1. Teams에서 모둠 기획안 열기</h3>
+    <p>선생님이 만든 그룹 과제를 열면, 우리 모둠 전용 사본이 자동으로 준비되어 있습니다. 조원 모두 동시에 접속해 함께 편집하세요.</p>
+    <div class="btnrow">
+      <button class="btn" data-toast="Teams 과제 탭에서 '기획안 작성' 과제를 열어주세요 — 프로토타입에서는 실제로 연결되지 않습니다">Teams에서 기획안 열기</button>
+    </div>
+  </div>
+
+  <div class="framework">
+    <div class="fw-head">전달하고 싶은 메시지 — 네 단계로 정리하기 (Teams 문서에서 작성하는 항목의 미리보기)</div>
+    <div class="field">
+      <label>관찰 <span class="hint">데이터가 보여주는 현상은?</span></label>
+      <input value="최근 30년간 한반도 주변 해역의 표층 수온이 뚜렷하게 상승했다" readonly>
+    </div>
+    <div class="field">
+      <label>연결 <span class="hint">우리 삶과 사회에 어떤 영향을 주는가?</span></label>
+      <input value="어획 어종이 바뀌고, 여름철 고수온 피해가 늘어난다" readonly>
+    </div>
+    <div class="field">
+      <label>임팩트 <span class="hint">대중이 이 사실을 알면 무엇이 달라지는가?</span></label>
+      <input value="기후변화를 먼 미래가 아니라 지금 우리 바다의 문제로 인식하게 된다" readonly>
+    </div>
+    <div class="field" style="margin-bottom:0">
+      <label>요청 <span class="hint">과학자로서 대중에게 무엇을 부탁하고 싶은가?</span></label>
+      <input value="바다 수온 변화 소식을 접할 때, 몇 년치 자료인지 확인하고 읽어주세요" readonly>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>데이터 (Teams 문서 항목)</h3>
+      <div class="field"><label>출처와 주소</label><input value="기상청 기상자료개방포털 · 해양 표층수온 관측자료" readonly></div>
+      <div class="field"><label>기간과 변수</label><input value="1994–2023년 / 월평균 표층수온" readonly></div>
+      <div class="field" style="margin-bottom:0"><label>분석 계획</label><textarea rows="3" readonly>연도별 평균 수온 산출 → 선형 추세선으로 상승률 계산 → 계절별로 나누어 여름철 상승폭 비교</textarea></div>
+    </div>
+    <div class="card">
+      <h3>화면과 표현 (Teams 문서 항목)</h3>
+      <div class="field"><label>읽는 사람</label><input value="해양 과학을 배운 적 없는 성인 일반인" readonly></div>
+      <div class="field"><label>시각화 계획과 이유</label><textarea rows="2" readonly>시계열 꺾은선 그래프. 세로축은 0이 아닌 실제 수온 범위를 쓰되, 축 범위를 명시해 왜곡을 방지</textarea></div>
+      <div class="field" style="margin-bottom:0"><label>화면 구성</label><textarea rows="2" readonly>홈 → 30년 수온 변화 → 계절별 비교 → 우리 밥상의 변화 → 마무리 요청</textarea></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>2. 완성한 Teams 문서를 여기에 업로드</h3>
+    <p>작성이 끝나면 문서를 내려받아(또는 링크로) 업로드하세요. 자동으로 내용을 읽어 아래 두 형식으로 변환합니다.</p>
+    <div class="upload">
+      <div style="font-size:13px;color:var(--slate)">완성된 Teams 문서(.docx)를 여기에 끌어다 놓거나 선택하세요</div>
+      <input type="file" disabled>
+      <div class="btnrow" style="justify-content:center">
+        <button class="btn tide" id="uploadConvertBtn">업로드하여 변환하기</button>
+      </div>
+    </div>
+    <div id="uploadResult" style="display:none;margin-top:16px">
+      <div class="note tide">변환이 완료되었습니다. 위의 기획안 미리보기와 같은 내용으로 PDF·프롬프트가 생성됩니다.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>모둠 역할 분담</h3>
+    <div class="field" style="margin-bottom:0"><textarea rows="2" readonly>데이터 수집·정제 / 분석·시각화 설계 / 메시지·화면 구성 — 각자 담당을 적고, 모두가 최종 검토에 참여합니다</textarea></div>
+  </div>
+
+  <div class="btnrow">
+    <button class="btn" data-toast="제출용 PDF 내려받기 — 프로토타입에서는 동작하지 않습니다">제출용 PDF 내려받기</button>
+    <button class="btn tide" data-toast="AI용 프롬프트 내려받기 — 프로토타입에서는 동작하지 않습니다">AI용 프롬프트 내려받기</button>
+    <span style="font-size:12px;color:var(--mist);align-self:center">두 형식으로 나옵니다</span>
+  </div>
+</main>
+
+<nav class="pagenav">
+  <a href="step4.html">← 이전 단계</a>
+  <a href="index.html" class="center" style="border:0;padding:0">메인 페이지</a>
+  <a href="step6.html">다음 단계 →</a>
+</nav>
+
+<script src="script.js"></script>
+</body>
+</html>
