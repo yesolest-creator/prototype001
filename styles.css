@@ -100,6 +100,16 @@ code,kbd,.mono{font-family:var(--font-mono);font-size:.92em;}
 }
 .topbar .home:hover{color:var(--white);border-color:var(--white);}
 
+/* 상단 우측 킥커 (메인 masthead 킥커와 동일 톤) */
+.topbar .kicker{
+  font-family:var(--font-mono);
+  font-size:11.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--mist);
+  white-space:nowrap;
+}
+
 /* 상단 핵심 메시지 (작게 유지) */
 .topbar .brand{
   font-family:var(--font-heading);
@@ -749,7 +759,7 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   .stepsection{padding-top:40px;}
   .topbar .wrap{min-height:50px;}
   .topbar .brand{font-size:13.5px;}
-  .topbar .home{font-size:12.5px;}
+  .topbar .kicker{display:none;}
   .steptrack a{min-width:126px;padding:12px 14px 12px 0;}
   .steptrack .st-name{font-size:12.5px;}
   .table{font-size:14px;min-width:460px;}
@@ -774,7 +784,7 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   .masthead-msg,.q,.masthead-lead{color:var(--abyss);}
   .hubcard{break-inside:avoid;box-shadow:none;}
   .topbar{background:none;color:var(--abyss);border-bottom:1px solid var(--line);}
-  .topbar .crumb,.topbar .crumb strong,.topbar .home{color:var(--abyss);}
+  .topbar .crumb,.topbar .crumb strong,.topbar .brand,.topbar .kicker{color:var(--abyss);}
   .savenote,.selectbar,.pagenav,.steptrack{display:none;}
   .tablewrap{box-shadow:none;overflow:visible;}
   .table{min-width:0;}
