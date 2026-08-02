@@ -3,79 +3,215 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STEP 01 · 목표와 평가</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<title>목표 및 평가 항목 · 대기·해양 데이터 프로젝트</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="topbar">
-  <div class="topbar-inner">
-    <span class="crumb">STEP <b>01</b> / 06 · 목표와 평가</span>
-    <a class="home-link" href="index.html">← 메인 페이지</a>
+<header class="topbar">
+  <div class="wrap">
+    <div class="crumb">STEP 1 / 6 <strong>목표 및 평가 항목</strong></div>
+    <a class="home" href="index.html">메인으로</a>
   </div>
-</div>
+</header>
 
-<main>
-  <div class="phead">
-    <h2>이 프로젝트에서 무엇을 하나요</h2>
-    <p>여러분은 데이터 커뮤니케이터입니다. 대기·해양 관측 데이터를 분석해, 그 주제를 전혀 모르는 사람에게 전달하는 웹앱을 기획하고 만듭니다.</p>
+<main class="wrap">
+
+  <div class="pagehead">
+    <h1>목표 및 평가 항목</h1>
+    <p class="readtime">읽는 데 약 5분</p>
+    <p class="savenote">이 페이지에 입력한 내용은 저장되지 않습니다. 새로고침하거나 페이지를 벗어나면 사라지니, 필요한 내용은 따로 기록해 두세요.</p>
   </div>
 
-  <div class="grid2">
-    <div class="card">
-      <h3>핵심 질문</h3>
-      <p>숫자로 가득한 관측 데이터를, 과학을 모르는 사람도 이해하고 신뢰하게 만들려면 무엇이 필요한가?</p>
-      <p>내가 고른 데이터는 정말 내 주장을 뒷받침하는가?</p>
+  <!-- 01 ------------------------------------------------------------ -->
+  <section class="stepsection" aria-labelledby="s1">
+    <div class="section-head">
+      <h2 id="s1"><span class="idx">01</span>왜 이 방식으로 평가하나요</h2>
     </div>
-    <div class="card">
-      <h3>기억할 것</h3>
-      <p>좋은 과학 커뮤니케이션은 화려한 기술이 아니라 <strong>정확성 + 명료성 + 읽는 사람에 대한 배려</strong>에서 나옵니다.</p>
-      <p>그래서 이 수행평가는 완성된 웹앱의 디자인보다 <strong>기획 과정</strong>을 더 크게 봅니다.</p>
+    <p class="lead">이 프로젝트가 지키는 네 가지 원칙입니다.</p>
+
+    <p class="note tide">데이터 없이 주장만 하는 것은 과학적 의사소통이 아니다.</p>
+    <p class="note tide">데이터가 있어도 해석하지 않으면, 아무 의미 없는 숫자 배열일 뿐이다.</p>
+    <p class="note tide">해석을 하더라도 성급하게 판단하면 잘못된 결론에 이를 수 있다.</p>
+    <p class="note tide">데이터를 신중하게 해석하고, 그 결과를 정직하게 전달하는 것 — 그것이 좋은 과학 커뮤니케이션이다.</p>
+  </section>
+
+  <!-- 02 ------------------------------------------------------------ -->
+  <section class="stepsection" aria-labelledby="s2">
+    <div class="section-head">
+      <h2 id="s2"><span class="idx">02</span>이번 프로젝트, 한눈에 보기</h2>
     </div>
-  </div>
 
-  <div class="card">
-    <h3>평가 기준 <span class="badge b-todo">세부 배점 확정 예정</span></h3>
-    <table>
-      <thead><tr><th>영역</th><th>무엇을 보나</th></tr></thead>
-      <tbody>
-        <tr><td>과학적 타당성</td><td>데이터 출처의 신뢰도, 분석 방법의 적절성, 교과 내용과의 연결</td></tr>
-        <tr><td>기획의 구체성</td><td>읽는 사람 설정, 전달 메시지의 명확성, 화면 구성의 논리</td></tr>
-        <tr><td>데이터 리터러시</td><td>원자료를 가공한 흔적, 시각화 선택의 근거, 상관과 인과의 구분</td></tr>
-        <tr><td>의사소통 효과성</td><td>비전문가 기준 이해 가능성, 과장이나 왜곡 없는 정직한 표현</td></tr>
-        <tr><td>완성도 <span class="badge b-open">가중치 낮음</span></td><td>최종 웹앱의 기능과 디자인</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="card">
-    <h3>4차시 일정</h3>
-    <div class="tl">
-      <div class="tl-item"><div class="h">1차시</div><div class="t">방향 잡기</div><div class="d">목표·평가 기준 확인 → 상관과 인과 학습 → 예시 미니 실습 → 모둠·주제 정하기</div></div>
-      <div class="tl-item"><div class="h">2차시</div><div class="t">기획안 쓰기</div><div class="d">데이터 소스 탐색 → Teams에서 모둠 기획안 작성 → 웹앱에 업로드해 PDF·프롬프트로 변환</div></div>
-      <div class="tl-item"><div class="h">3차시</div><div class="t">만들기</div><div class="d">교사 피드백 반영 → 프롬프트로 웹앱 제작 착수</div></div>
-      <div class="tl-item"><div class="h">4차시</div><div class="t">공유하기</div><div class="d">제작 마무리 → 배포 → 갤러리워크로 서로의 웹앱 살펴보고 의견 남기기</div></div>
+    <div class="tablewrap">
+      <table class="table">
+        <caption class="sr-only">이번 프로젝트의 목표, 역할, 대상, 결과물, 평가 기준</caption>
+        <thead>
+          <tr><th scope="col">항목</th><th scope="col">내용</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">목표</th><td>대기·해양 공공데이터를 정량 분석해, 대중에게 신뢰성 있게 전달하는 웹앱을 기획합니다.</td></tr>
+          <tr><th scope="row">역할</th><td>데이터 커뮤니케이터</td></tr>
+          <tr><th scope="row">대상</th><td>이 주제를 잘 모르는 일반 대중</td></tr>
+          <tr><th scope="row">결과물</th><td>기획안(PDF) → 웹앱 제작 → 결과 보고서(PDF)</td></tr>
+          <tr><th scope="row">기준</th><td>아래 평가 루브릭(6개 영역, 20점 만점)을 기준으로 평가합니다.</td></tr>
+        </tbody>
+      </table>
     </div>
-  </div>
+  </section>
 
-  <div class="card">
-    <h3>제출물 세 가지</h3>
-    <table>
-      <tbody>
-        <tr><td>① 기획안 PDF</td><td>2차시 제출 · 기획 구체성·타당성 평가 근거</td></tr>
-        <tr><td>② 결과 보고서 PDF</td><td>4차시 제출 · 웹앱 스크린샷, 분석 결과, 기획과 달라진 점</td></tr>
-        <tr><td>③ 웹앱 파일 + 배포 링크</td><td>4차시 제출 · 실제 작동하는 결과물</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <!-- 03 ------------------------------------------------------------ -->
+  <section class="stepsection" aria-labelledby="s3">
+    <div class="section-head">
+      <h2 id="s3"><span class="idx">03</span>평가 루브릭 · 20점 만점</h2>
+    </div>
+    <p class="lead">여섯 개 영역으로 나누어 평가합니다. 웹앱 자체의 완성도보다 기획 과정을 더 크게 봅니다.</p>
+
+    <div class="tablewrap">
+      <table class="table">
+        <caption class="sr-only">평가 루브릭 6개 영역과 배점, 상세 설명</caption>
+        <thead>
+          <tr>
+            <th scope="col">영역</th>
+            <th scope="col" class="num-col">배점</th>
+            <th scope="col">상세 설명</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">기획의 구체성</th>
+            <td class="num-col">5</td>
+            <td>
+              <ul class="lines">
+                <li>관찰·연결·임팩트·요청 4단계를 모두 채웠다.</li>
+                <li>각 단계마다 구체적인 데이터와 근거를 사용하였다.</li>
+                <li>실행 가능한 수준까지 기획을 구체화하였다.</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">데이터 리터러시</th>
+            <td class="num-col">4</td>
+            <td>
+              <ul class="lines">
+                <li>데이터 출처와 처리 과정을 투명하게 제시하였다.</li>
+                <li>이상치·표본 왜곡 등 통계적 오류 없이 분석하였다.</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">과학적 타당성</th>
+            <td class="num-col">4</td>
+            <td>
+              <ul class="lines">
+                <li>데이터가 뒷받침하는 범위 안에서 결론을 도출하였다.</li>
+                <li>근거와 주장 사이에 논리적 비약이나 과잉 일반화가 없었다.</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">의사소통 효과성</th>
+            <td class="num-col">3</td>
+            <td>
+              <ul class="lines">
+                <li>비전공 일반 대중이 이해할 수 있는 언어와 시각화를 사용하였다.</li>
+                <li>핵심 메시지를 명료하고 과장 없이 전달하였다.</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">웹앱 완성도</th>
+            <td class="num-col">2</td>
+            <td>
+              <ul class="lines">
+                <li>웹앱이 오류 없이 작동하였다.</li>
+                <li>기본적인 완성 수준을 갖추었다.</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">동료평가 타당성</th>
+            <td class="num-col">2</td>
+            <td>
+              <ul class="lines">
+                <li>다른 모둠의 웹앱을 근거를 바탕으로 평가하였다.</li>
+                <li>타당한 기준으로 평가에 참여하였다.</li>
+              </ul>
+            </td>
+          </tr>
+          <tr class="total">
+            <th scope="row">합계</th>
+            <td class="num-col">20</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 04 ------------------------------------------------------------ -->
+  <section class="stepsection" aria-labelledby="s4">
+    <div class="section-head">
+      <h2 id="s4"><span class="idx">04</span>제출물 안내</h2>
+    </div>
+    <p class="lead">반을 선택하면 제출 기한이 표시됩니다.</p>
+
+    <div class="selectbar">
+      <label for="class-select">우리 반</label>
+      <select id="class-select">
+        <option value="default">반 선택</option>
+        <option value="1">1반</option>
+        <option value="2">2반</option>
+        <option value="3">3반</option>
+        <option value="4">4반</option>
+        <option value="5">5반</option>
+        <option value="6">6반</option>
+        <option value="7">7반</option>
+        <option value="8">8반</option>
+      </select>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table">
+        <caption class="sr-only">제출물 3종의 시점, 설명, 제출 기한</caption>
+        <thead>
+          <tr>
+            <th scope="col">제출물</th>
+            <th scope="col" class="when">시점</th>
+            <th scope="col">설명</th>
+            <th scope="col" class="due">제출 기한</th>
+          </tr>
+        </thead>
+        <tbody aria-live="polite">
+          <tr>
+            <th scope="row">기획안 PDF</th>
+            <td class="when">2차시</td>
+            <td>기획 구체성·타당성 평가, 교사 피드백의 근거로 활용됩니다.</td>
+            <td class="due" data-due="plan" data-state="empty">미정</td>
+          </tr>
+          <tr>
+            <th scope="row">결과 보고서 PDF</th>
+            <td class="when">4차시</td>
+            <td>분석 결과와 웹앱에 기획 의도가 반영되었는지를 확인합니다. 기술적 문제가 생겼을 때 평가 백업 자료로도 쓰입니다.</td>
+            <td class="due" data-due="report" data-state="empty">미정</td>
+          </tr>
+          <tr>
+            <th scope="row">웹앱 결과물</th>
+            <td class="when">4차시</td>
+            <td>코드 일체를 제출합니다. 배포는 제출 후 교사가 진행합니다. <span class="warn">온라인에 배포되므로, 이름·연락처 등 개인정보를 코드에 절대 포함하지 마세요.</span></td>
+            <td class="due" data-due="webapp" data-state="empty">미정</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <nav class="pagenav" aria-label="페이지 이동">
+    <span class="disabled">이전 단계 없음</span>
+    <a class="nav-home" href="index.html">메인으로</a>
+    <a href="step2.html">데이터 분석 방법 →</a>
+  </nav>
+
 </main>
-
-<nav class="pagenav">
-  <span class="disabled">← 이전 단계</span>
-  <a href="index.html" class="center" style="border:0;padding:0">메인 페이지</a>
-  <a href="step2.html">다음 단계 →</a>
-</nav>
 
 <script src="script.js"></script>
 </body>

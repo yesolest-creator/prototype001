@@ -486,7 +486,185 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
 .pagenav .nav-home{font-weight:600;color:var(--abyss);}
 .pagenav .disabled{color:var(--mist);pointer-events:none;}
 
-/* ---------- 15. 반응형 ---------- */
+/* ---------- 15. .pagehead / .stepsection — step 페이지 골격 ---------- */
+.pagehead{
+  padding:44px 0 0;
+}
+.pagehead h1{
+  font-size:clamp(26px,3.4vw,34px);
+  letter-spacing:-.02em;
+}
+.pagehead .readtime{
+  margin-top:12px;
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.08em;
+  color:var(--mist);
+}
+
+.stepsection{padding:50px 0 0;}
+.stepsection .lead{
+  font-size:14.5px;
+  color:var(--slate);
+  margin-bottom:18px;
+}
+
+/* ---------- 16. .savenote — 저장되지 않음 공통 안내 (step1~6 공통) ---------- */
+.savenote{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin-top:22px;
+  padding:12px 16px;
+  border:1px dashed var(--signal);
+  background:rgba(216,168,125,.10);
+  border-radius:8px;
+  font-size:13.5px;
+  line-height:1.6;
+  color:var(--slate);
+}
+.savenote::before{
+  content:"!";
+  flex:none;
+  width:18px;height:18px;
+  margin-top:2px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:var(--signal);
+  color:var(--white);
+  font-family:var(--font-mono);
+  font-size:11px;
+  font-weight:600;
+  line-height:1;
+}
+
+/* ---------- 17. .tablewrap / .table — 표 ---------- */
+.tablewrap{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow-x:auto;
+  margin:0 0 16px;
+}
+.table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14.5px;
+  min-width:520px;
+}
+.table th,
+.table td{
+  text-align:left;
+  vertical-align:top;
+  padding:14px 18px;
+  border-bottom:1px solid var(--line);
+}
+.table thead th{
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:13.5px;
+  letter-spacing:-.02em;
+  color:var(--abyss);
+  background:rgba(154,165,173,.10);
+  border-bottom:1px solid var(--line);
+  white-space:nowrap;
+}
+.table tbody tr:last-child th,
+.table tbody tr:last-child td{border-bottom:0;}
+.table tbody th{
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:14.5px;
+  letter-spacing:-.02em;
+  white-space:nowrap;
+  width:1%;
+}
+.table td{color:var(--slate);line-height:1.65;}
+.table .num-col{
+  font-family:var(--font-mono);
+  font-size:14px;
+  font-weight:600;
+  color:var(--abyss);
+  text-align:center;
+  white-space:nowrap;
+  width:1%;
+}
+.table thead .num-col{text-align:center;}
+.table .when{
+  font-family:var(--font-mono);
+  font-size:13px;
+  color:var(--slate);
+  white-space:nowrap;
+  width:1%;
+}
+.table .due{
+  font-family:var(--font-mono);
+  font-size:13px;
+  font-weight:500;
+  color:var(--abyss);
+  white-space:nowrap;
+  width:1%;
+}
+.table .due[data-state="empty"]{color:var(--mist);font-weight:400;}
+.table .warn{color:var(--alert);font-weight:600;}
+/* 셀 안 여러 줄 설명 */
+.table .lines{list-style:none;margin:0;padding:0;}
+.table .lines li{
+  position:relative;
+  padding-left:13px;
+  line-height:1.6;
+}
+.table .lines li+li{margin-top:5px;}
+.table .lines li::before{
+  content:"";
+  position:absolute;left:0;top:.62em;
+  width:5px;height:1px;
+  background:var(--mist);
+}
+/* 합계 행 */
+.table tr.total th,
+.table tr.total td{
+  background:var(--tide-dim);
+  color:var(--abyss);
+  font-weight:700;
+  border-top:1px solid rgba(147,190,213,.6);
+}
+.table tr.total .num-col{font-size:15px;}
+
+/* ---------- 18. .selectbar — 반 선택 드롭다운 ---------- */
+.selectbar{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:16px;
+}
+.selectbar label{
+  font-size:13.5px;
+  color:var(--slate);
+}
+.selectbar select{
+  font-family:var(--font-body);
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:-.01em;
+  color:var(--abyss);
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:9px 38px 9px 14px;
+  cursor:pointer;
+  appearance:none;
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%235A6570' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  transition:border-color .15s ease;
+}
+.selectbar select:hover{border-color:var(--tide);}
+.selectbar select:focus-visible{border-color:var(--abyss);}
+
+/* ---------- 19. 반응형 ---------- */
 @media (max-width:900px){
   .hubgrid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .qset{grid-template-columns:1fr;gap:24px;}
@@ -500,9 +678,14 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   .section-head{flex-direction:column;gap:6px;}
   .masthead-msg{font-size:27px;}
   .pagenav{flex-wrap:wrap;justify-content:center;gap:14px;}
+  .pagehead{padding-top:32px;}
+  .stepsection{padding-top:40px;}
+  .table{font-size:14px;min-width:460px;}
+  .table th,.table td{padding:12px 14px;}
+  .selectbar select{width:100%;}
 }
 
-/* ---------- 16. 모션 최소화 ---------- */
+/* ---------- 20. 모션 최소화 ---------- */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{
     animation-duration:.01ms !important;
@@ -512,10 +695,16 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   }
 }
 
-/* ---------- 17. 인쇄 ---------- */
+/* ---------- 21. 인쇄 ---------- */
 @media print{
   .masthead{background:none;color:var(--abyss);padding:20px 0;}
   .masthead::before{display:none;}
   .masthead-msg,.q,.masthead-lead{color:var(--abyss);}
   .hubcard{break-inside:avoid;box-shadow:none;}
+  .topbar{background:none;color:var(--abyss);border-bottom:1px solid var(--line);}
+  .topbar .crumb,.topbar .crumb strong,.topbar .home{color:var(--abyss);}
+  .savenote,.selectbar,.pagenav{display:none;}
+  .tablewrap{box-shadow:none;overflow:visible;}
+  .table{min-width:0;}
+  .table tr{break-inside:avoid;}
 }
