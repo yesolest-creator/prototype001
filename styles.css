@@ -741,9 +741,299 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
 .selectbar select:hover{border-color:var(--tide);}
 .selectbar select:focus-visible{border-color:var(--abyss);}
 
-/* ---------- 19. 반응형 ---------- */
+/* ---------- 19. .flowsteps — 분석 과정 4단계 스트립 ---------- */
+.flowsteps{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin:22px 0 0;
+  padding:0;
+  list-style:none;
+  counter-reset:flowstep;
+}
+.flowsteps li{
+  position:relative;
+  padding:16px 16px 15px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.flowsteps li::before{
+  counter-increment:flowstep;
+  content:"0" counter(flowstep);
+  display:block;
+  font-family:var(--font-mono);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.12em;
+  color:var(--tide);
+  margin-bottom:9px;
+}
+.flowsteps strong{
+  display:block;
+  font-family:var(--font-heading);
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:-.02em;
+  margin-bottom:5px;
+}
+.flowsteps span{
+  display:block;
+  font-size:13px;
+  line-height:1.6;
+  color:var(--slate);
+}
+
+/* ---------- 20. .srclist / .codeblock / .datapeek — 데이터 불러오기 ---------- */
+.srclist{
+  list-style:none;
+  margin:0 0 18px;
+  padding:2px 20px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.srclist .src{flex-wrap:wrap;gap:4px 12px;}
+
+.codeblock{
+  position:relative;
+  background:var(--abyss);
+  border-radius:var(--radius);
+  padding:18px 20px;
+  margin:0 0 16px;
+  overflow:hidden;
+}
+.codeblock pre{
+  margin:0;
+  overflow-x:auto;
+  font-family:var(--font-mono);
+  font-size:12.5px;
+  line-height:1.7;
+  color:#E7E9EA;
+  white-space:pre;
+  word-break:normal;
+}
+.codeblock .cm{color:#8FA3AE;}
+.codeblock .st{color:#BFD9E6;}
+.codeblock .kw{color:var(--tide);}
+.codeblock .copy{
+  position:absolute;top:12px;right:12px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.04em;
+  color:rgba(255,255,255,.72);
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:6px;
+  padding:5px 11px;
+  cursor:pointer;
+  transition:background .15s ease, color .15s ease;
+}
+.codeblock .copy:hover{background:rgba(255,255,255,.16);color:var(--white);}
+.codeblock .copy.done{background:var(--tide);border-color:var(--tide);color:#22333D;}
+
+.datapeek{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  margin:0 0 16px;
+}
+.datapeek .peekhead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:10px 16px;
+  background:rgba(154,165,173,.10);
+  border-bottom:1px solid var(--line);
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--slate);
+}
+.datapeek pre{
+  margin:0;
+  padding:14px 16px;
+  overflow-x:auto;
+  font-family:var(--font-mono);
+  font-size:12.5px;
+  line-height:1.75;
+  color:var(--slate);
+  white-space:pre;
+  word-break:normal;
+}
+.datapeek pre b{color:var(--abyss);font-weight:600;}
+.datapeek pre .dim{color:var(--mist);}
+
+/* 요약 수치 3~4칸 */
+.statrow{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin:0 0 18px;
+  padding:0;
+  list-style:none;
+}
+.statrow li{
+  padding:14px 16px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+}
+.statrow .k{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--mist);
+  margin-bottom:6px;
+}
+.statrow .v{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:19px;
+  font-weight:600;
+  color:var(--abyss);
+  letter-spacing:-.01em;
+}
+.statrow .v small{
+  font-size:12px;
+  font-weight:500;
+  color:var(--slate);
+  margin-left:4px;
+  letter-spacing:0;
+}
+
+/* 섹션 안 소제목 */
+.subhead{
+  font-size:16px;
+  letter-spacing:-.02em;
+  margin:26px 0 12px;
+}
+
+/* ---------- 21. 차트 SVG ---------- */
+.chartbox .chart-tools{margin-bottom:14px;}
+.chart-svg{width:100%;height:auto;display:block;}
+.chart-svg .grid{stroke:var(--line);stroke-width:1;}
+.chart-svg .axis{stroke:var(--mist);stroke-width:1;}
+.chart-svg .axlbl{
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  fill:var(--mist);
+}
+.chart-svg .axlbl.left{text-anchor:end;}
+.chart-svg .axlbl.right{text-anchor:start;}
+.chart-svg .axlbl.mid{text-anchor:middle;}
+.chart-svg .axtitle{
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.06em;
+  fill:var(--slate);
+}
+.chart-svg .axtitle.end{text-anchor:end;}
+.chart-svg .axtitle.mid{text-anchor:middle;}
+.chart-svg .line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;}
+.chart-svg .line.temp{stroke:var(--alert);}
+.chart-svg .line.co2{stroke:#4E86A6;}
+.chart-svg .dot{fill:#4E86A6;fill-opacity:.55;}
+.chartlegend{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  font-size:12.5px;
+  color:var(--slate);
+}
+.chartlegend span{display:inline-flex;align-items:center;gap:7px;}
+.chartlegend i{
+  width:14px;height:3px;border-radius:2px;display:inline-block;
+}
+.chartlegend .k-temp{background:var(--alert);}
+.chartlegend .k-co2{background:#4E86A6;}
+.chartpanel[hidden]{display:none;}
+
+/* ---------- 22. .quiz — 개념 확인 문제 ---------- */
+.quiz{
+  margin-top:22px;
+  padding:20px 22px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.quiz .qlabel{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--tide);
+  margin-bottom:8px;
+}
+.quiz .qtext{
+  font-family:var(--font-heading);
+  font-size:15.5px;
+  font-weight:700;
+  letter-spacing:-.02em;
+  line-height:1.6;
+  margin-bottom:14px;
+}
+.quiz .choices{display:flex;flex-wrap:wrap;gap:8px;}
+.quiz .choices button{
+  font-family:var(--font-body);
+  font-size:14px;
+  font-weight:500;
+  letter-spacing:-.01em;
+  color:var(--abyss);
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:9px 16px;
+  cursor:pointer;
+  text-align:left;
+  transition:border-color .15s ease, background .15s ease;
+}
+.quiz .choices button:hover{border-color:var(--tide);background:var(--white);}
+.quiz .choices button[aria-pressed="true"]{
+  border-color:var(--abyss);
+  background:var(--white);
+  font-weight:600;
+  box-shadow:0 1px 2px rgba(44,54,63,.10);
+}
+.quiz .fb{
+  display:none;
+  margin-top:14px;
+  padding:12px 16px;
+  border-radius:8px;
+  font-size:13.8px;
+  line-height:1.65;
+}
+.quiz .fb.ok{
+  display:block;
+  background:var(--tide-dim);
+  color:#2F6079;
+  border-left:3px solid var(--tide);
+}
+.quiz .fb.no{
+  display:block;
+  background:rgba(216,168,125,.12);
+  color:#8A5A2A;
+  border-left:3px solid var(--signal);
+}
+
+/* ---------- 23. 반응형 ---------- */
 @media (max-width:900px){
   .hubgrid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .flowsteps{grid-template-columns:repeat(2,minmax(0,1fr));}
   .qset{grid-template-columns:1fr;gap:24px;}
   .qset-label{margin-bottom:-8px;}
   .masthead{padding:56px 0 50px;}
@@ -765,9 +1055,13 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   .table{font-size:14px;min-width:460px;}
   .table th,.table td{padding:12px 14px;}
   .selectbar select{width:100%;}
+  .flowsteps{grid-template-columns:1fr;gap:10px;}
+  .statrow{grid-template-columns:1fr;gap:10px;}
+  .quiz{padding:18px 16px;}
+  .quiz .choices{flex-direction:column;align-items:stretch;}
 }
 
-/* ---------- 20. 모션 최소화 ---------- */
+/* ---------- 24. 모션 최소화 ---------- */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{
     animation-duration:.01ms !important;
@@ -777,7 +1071,7 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   }
 }
 
-/* ---------- 21. 인쇄 ---------- */
+/* ---------- 25. 인쇄 ---------- */
 @media print{
   .masthead{background:none;color:var(--abyss);padding:20px 0;}
   .masthead::before{display:none;}
@@ -786,6 +1080,11 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   .topbar{background:none;color:var(--abyss);border-bottom:1px solid var(--line);}
   .topbar .crumb,.topbar .crumb strong,.topbar .brand,.topbar .kicker{color:var(--abyss);}
   .savenote,.selectbar,.pagenav,.steptrack{display:none;}
+  .codeblock .copy,.chartbox .chart-tools{display:none;}
+  .codeblock{background:none;border:1px solid var(--line);}
+  .codeblock pre{color:var(--abyss);}
+  .quiz{break-inside:avoid;box-shadow:none;}
+  .chartpanel[hidden]{display:block;}
   .tablewrap{box-shadow:none;overflow:visible;}
   .table{min-width:0;}
   .table tr{break-inside:avoid;}

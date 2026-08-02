@@ -2,119 +2,395 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STEP 02 · 상관과 인과</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데이터 분석 방법 · 대기·해양 데이터 프로젝트</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="topbar">
-  <div class="topbar-inner">
-    <span class="crumb">STEP <b>02</b> / 06 · 상관과 인과</span>
-    <a class="home-link" href="index.html">← 메인 페이지</a>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">과학자는 <span class="accent">데이터</span>로 의사소통한다</a>
+    <span class="kicker">지구과학 · 대기와 해양의 상호작용</span>
+  </div>
+  <nav class="steptrack" aria-label="단계 이동">
+    <div class="wrap">
+      <a href="step1.html"><span class="st-num">STEP 01</span><span class="st-name">목표 및 평가 항목</span></a>
+      <a href="step2.html" aria-current="step"><span class="st-num">STEP 02</span><span class="st-name">데이터 분석 방법</span></a>
+      <a href="step3.html"><span class="st-num">STEP 03</span><span class="st-name">웹앱 제작 연습</span></a>
+      <a href="step4.html"><span class="st-num">STEP 04</span><span class="st-name">데이터 활용 가이드</span></a>
+      <a href="step5.html"><span class="st-num">STEP 05</span><span class="st-name">기획안 작성</span></a>
+      <a href="step6.html"><span class="st-num">STEP 06</span><span class="st-name">웹앱 구현 및 점검</span></a>
+    </div>
+  </nav>
+</header>
+
+<div class="pagehead">
+  <div class="wrap">
+    <h1>데이터 분석 방법</h1>
+    <p class="readtime">읽는 데 약 15분</p>
+    <p class="savenote">이 페이지에 입력한 내용은 저장되지 않습니다. 새로고침하거나 페이지를 벗어나면 사라지니, 필요한 내용은 따로 기록해 두세요.</p>
   </div>
 </div>
 
 <main>
-  <div class="phead">
-    <h2>상관과 인과, 기초부터 차근차근</h2>
-    <p>딱 하나만 짚고 넘어갑니다. <strong>"함께 움직인다"</strong>와 <strong>"하나가 다른 하나를 일으킨다"</strong>는 다른 이야기라는 것. 이 페이지가 끝날 때쯤엔 왜 그런지 스스로 설명할 수 있게 됩니다.</p>
-  </div>
 
-  <div class="chartbox">
-    <div class="chart-head">
-      <div>
-        <div class="chart-title">전지구 평균기온과 대기 중 CO₂ 농도 <span class="badge b-live">1980–2023 예시 자료</span></div>
-        <div style="font-size:12px;color:var(--mist);margin-top:3px">두 값이 거의 같이 움직입니다 — 상관계수 r ≈ 0.97 (매우 강한 양의 상관)</div>
-      </div>
+<!-- ============ 01 ============ -->
+<section class="stepsection">
+  <div class="wrap">
+    <div class="section-head">
+      <h2><span class="idx">01</span>숫자를 보는 것과 분석하는 것</h2>
     </div>
-    <svg id="co2Scatter" viewBox="0 0 620 250" role="img" aria-label="기온과 CO2 농도 산점도"></svg>
-    <div class="verdict v-bad">이렇게 딱 맞아떨어지는데, <strong>"CO₂가 기온을 올린 원인이다"라고 지금 바로 말해도 될까요?</strong> 아래 세 단계를 거치고 나서 다시 판단해봅시다.</div>
-  </div>
+    <p class="lead">데이터를 화면에 띄우는 것까지는 분석이 아닙니다. 그 안에서 무엇을 찾아냈는지 말할 수 있어야 분석입니다.</p>
 
-  <div class="chartbox">
-    <div class="chart-head">
-      <div>
-        <div class="chart-title">1단계 · 상관, 숫자보다 먼저 눈으로</div>
-        <div style="font-size:12px;color:var(--mist);margin-top:3px">점이 흩어진 모양을 보면 상관의 세기가 보입니다</div>
-      </div>
-      <div class="toggle" role="group" aria-label="상관 세기 예시 전환">
-        <button data-corr="strong" aria-pressed="true">강한 상관</button>
-        <button data-corr="mid" aria-pressed="false">약한 상관</button>
-        <button data-corr="none" aria-pressed="false">상관 없음</button>
-      </div>
-    </div>
-    <svg id="corrScatter" viewBox="0 0 620 230" role="img" aria-label="상관 세기별 산점도 예시"></svg>
-    <p style="font-size:13px;color:var(--slate);margin-top:12px" id="corrCaption"></p>
-  </div>
-
-  <div class="grid2">
     <div class="card">
-      <h3>2단계 · 상관은 인과가 아니다</h3>
-      <p>아이스크림 판매량과 물놀이 사고 건수는 여름마다 함께 올라갑니다. 그렇다고 아이스크림이 사고를 일으키는 건 아닙니다.</p>
-      <p style="margin-top:9px">둘 다 <strong>여름철 기온</strong>이라는, 눈에 잘 안 띄는 제3의 원인(교란변수)을 함께 따라갈 뿐입니다.</p>
-      <div class="note"><strong>스스로 물어볼 것</strong> — 내가 찾은 두 변수를 동시에 움직이는, 숨은 공통 원인이 있지는 않은가?</div>
+      <h3>원자료는 아직 아무 말도 하지 않는다</h3>
+      <p>이 페이지에서 다룰 자료에는 <span class="mono">2023, 1.1675, 421.08</span> 같은 숫자가 수십 줄 들어 있습니다. 이 상태로는 읽는 사람이 알 수 있는 것이 없습니다. 여기서 "1959년 이후 두 값이 함께 올라왔다"는 사실을 꺼내는 순간부터가 분석입니다.</p>
+      <p>정량적으로 분석한다는 것은 인상이 아니라 <strong>숫자로 확인한다</strong>는 뜻입니다. "많이 올랐다"가 아니라 "66년 동안 약 1.2℃ 올랐다"라고 말할 수 있어야 합니다.</p>
     </div>
+
+    <div class="note tide">데이터가 있어도 해석하지 않으면, 아무 의미 없는 숫자 배열일 뿐이다.</div>
+
+    <ul class="flowsteps">
+      <li><strong>불러오기</strong><span>공개된 주소에서 원본 자료를 그대로 가져옵니다.</span></li>
+      <li><strong>정리하기</strong><span>필요한 열만 남기고 두 자료를 연도 기준으로 맞춥니다.</span></li>
+      <li><strong>패턴 찾기</strong><span>추세와 두 값의 관계를 수치로 확인합니다.</span></li>
+      <li><strong>해석하기</strong><span>수치가 뒷받침하는 범위 안에서만 결론을 냅니다.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 02 ============ -->
+<section class="stepsection">
+  <div class="wrap">
+    <div class="section-head">
+      <h2><span class="idx">02</span>데이터는 링크로 불러옵니다</h2>
+    </div>
+    <p class="lead">아래 그래프는 예시로 만든 값이 아니라, 이 두 주소에서 실제로 받아온 관측 자료입니다.</p>
+
+    <ul class="srclist">
+      <li class="src">
+        <span class="src-name">전지구 평균기온 편차 · NASA GISTEMP</span>
+        <span class="src-url">raw.githubusercontent.com/datasets/global-temp/main/data/annual.csv</span>
+      </li>
+      <li class="src">
+        <span class="src-name">대기 중 CO₂ 농도 · NOAA 마우나로아 관측소</span>
+        <span class="src-url">raw.githubusercontent.com/datasets/co2-ppm/main/data/co2-annmean-mlo.csv</span>
+      </li>
+    </ul>
+
+    <div class="codeblock">
+      <button type="button" class="copy">코드 복사</button>
+      <pre><span class="cm"># 1) 전지구 평균기온 편차 (GISTEMP 기준)</span>
+temp = pd.read_csv(<span class="st">"https://raw.githubusercontent.com/datasets/global-temp/main/data/annual.csv"</span>)
+temp = temp[temp[<span class="st">'Source'</span>] == <span class="st">'GISTEMP'</span>][[<span class="st">'Year'</span>,<span class="st">'Mean'</span>]].rename(columns={<span class="st">'Mean'</span>:<span class="st">'Temp_Anomaly'</span>})
+
+<span class="cm"># 2) 대기 중 CO2 농도 (마우나로아 관측소)</span>
+co2 = pd.read_csv(<span class="st">"https://raw.githubusercontent.com/datasets/co2-ppm/main/data/co2-annmean-mlo.csv"</span>)
+co2 = co2[[<span class="st">'Year'</span>,<span class="st">'Mean'</span>]].rename(columns={<span class="st">'Mean'</span>:<span class="st">'CO2_ppm'</span>})
+
+<span class="cm"># 3) 두 자료를 연도 기준으로 합치기</span>
+df = pd.merge(temp, co2, on=<span class="st">'Year'</span>)</pre>
+    </div>
+
     <div class="card">
-      <h3>3단계 · R², "설명한다"는 것의 의미</h3>
-      <p>추세선을 그리면 R²라는 값이 함께 나옵니다. 이 선이 데이터의 변화를 <strong>얼마나 잘 따라가는지</strong> 0~1 사이 숫자로 나타낸 것입니다.</p>
-      <div style="display:flex;align-items:center;gap:16px;margin-top:12px">
-        <svg width="68" height="68" viewBox="0 0 72 72" aria-hidden="true">
-          <circle cx="36" cy="36" r="30" fill="none" stroke="#DCE3EA" stroke-width="8"/>
-          <circle cx="36" cy="36" r="30" fill="none" stroke="#00A79D" stroke-width="8" stroke-dasharray="188.4" stroke-dashoffset="17" stroke-linecap="round" transform="rotate(-90 36 36)"/>
-          <text x="36" y="41" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" font-weight="700" fill="#0B1A2E">0.91</text>
-        </svg>
-        <p style="font-size:13px;color:var(--slate);flex:1">R²=0.91은 "잘 따라간다"는 뜻이지, <strong>"왜 그런지"는 알려주지 않습니다.</strong> 값이 높다고 원인이 증명된 것은 아닙니다.</p>
-      </div>
-      <div class="note"><strong>스스로 물어볼 것</strong> — 내가 그린 추세선이 무엇을 뜻하는지 한 문장으로 설명할 수 있는가?</div>
+      <h3>왜 파일이 아니라 주소를 쓰나요</h3>
+      <p><strong>재현할 수 있기 때문입니다.</strong> 누구든 같은 주소를 열면 같은 자료를 받습니다. "제가 어디선가 받은 파일"은 확인할 방법이 없지만, 주소는 다른 사람이 직접 확인할 수 있습니다. 루브릭의 <strong>데이터 리터러시</strong> 항목이 요구하는 "출처와 처리 과정을 투명하게 제시했는가"가 바로 이것입니다.</p>
+      <p>또 하나, 관측 기관이 값을 갱신하면 같은 주소에서 최신 자료가 따라옵니다. 실제로 위 자료에는 2025년 값까지 들어 있습니다.</p>
     </div>
-  </div>
 
-  <div class="card" style="border-color:var(--tide-dim);background:#F7FDFC">
-    <h3>다시, 처음 질문으로</h3>
-    <p>r ≈ 0.97은 기온과 CO₂ 농도가 <strong>강하게 함께 움직였다</strong>는 사실을 보여줄 뿐, 그 자체로 원인을 증명하지는 않습니다. 실제로 CO₂가 원인이라는 결론은 이 상관관계 하나가 아니라, 물리·화학적 원리(온실효과)와 다른 여러 증거가 함께 뒷받침해서 나온 것입니다. <strong>상관은 출발점이지 결론이 아닙니다.</strong></p>
-  </div>
+    <div class="note">인증키가 필요한 API 대신 <strong>공개된 CSV 주소</strong>를 씁니다. 인증키는 코드에 남으면 그대로 공개되기 때문입니다. 주제별로 쓸 수 있는 데이터 주소는 <strong>4단계 데이터 활용 가이드</strong>에서 안내합니다.</div>
 
-  <div class="grid2">
+    <h3 class="subhead">받아온 원본은 이렇게 생겼습니다</h3>
+    <div class="datapeek">
+      <div class="peekhead"><span>global-temp / annual.csv — 원본 첫 5줄</span><span>그대로 쓸 수 없는 상태</span></div>
+      <pre><b>Source,Year,Mean</b>
+<span class="dim">GCAG</span>,1850,-0.4265
+<span class="dim">GCAG</span>,1851,-0.2635
+<span class="dim">GCAG</span>,1852,-0.2241
+<span class="dim">GCAG</span>,1853,-0.2623</pre>
+    </div>
+    <p class="lead">한 파일 안에 <span class="mono">GCAG</span>와 <span class="mono">GISTEMP</span> 두 기관의 값이 섞여 있습니다. 이걸 모르고 그대로 평균을 내면 같은 해가 두 번 들어갑니다. 위 코드의 <span class="mono">Source == 'GISTEMP'</span>가 하는 일이 이 걸러내기입니다. <strong>어떤 처리를 왜 했는지 밝히는 것까지가 분석</strong>입니다.</p>
+
+    <h3 class="subhead">정리한 뒤 (최근 5개 연도)</h3>
+    <div class="tablewrap">
+      <table class="table">
+        <thead>
+          <tr><th scope="col">연도</th><th scope="col" class="num-col">기온 편차 (℃)</th><th scope="col" class="num-col">CO₂ 농도 (ppm)</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">2021</th><td class="num-col">0.847</td><td class="num-col">416.41</td></tr>
+          <tr><th scope="row">2022</th><td class="num-col">0.891</td><td class="num-col">418.53</td></tr>
+          <tr><th scope="row">2023</th><td class="num-col">1.168</td><td class="num-col">421.08</td></tr>
+          <tr><th scope="row">2024</th><td class="num-col">1.284</td><td class="num-col">424.61</td></tr>
+          <tr><th scope="row">2025</th><td class="num-col">1.192</td><td class="num-col">427.35</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ul class="statrow">
+      <li><span class="k">분석 구간</span><span class="v">1959–2025</span></li>
+      <li><span class="k">자료 개수</span><span class="v">67<small>개 연도</small></span></li>
+      <li><span class="k">기온 편차 기준</span><span class="v">20세기<small>평균 대비</small></span></li>
+    </ul>
+    <p class="lead">기온 자료는 1850년부터 있지만 CO₂ 관측은 1959년에 시작됐습니다. 두 자료를 함께 보려면 <strong>겹치는 구간만</strong> 써야 하므로 분석 구간이 1959년부터가 됩니다. 데이터가 있는 만큼만 말할 수 있다는 뜻이기도 합니다.</p>
+  </div>
+</section>
+
+<!-- ============ 03 ============ -->
+<section class="stepsection">
+  <div class="wrap">
+    <div class="section-head">
+      <h2><span class="idx">03</span>추세와 상관관계 읽기</h2>
+    </div>
+    <p class="lead">같은 데이터도 어떻게 그리느냐에 따라 다른 것이 보입니다. 두 가지 방식으로 확인해 보세요.</p>
+
+    <div class="chartbox">
+      <p class="chart-title">전지구 평균기온 편차와 대기 중 CO₂ 농도</p>
+      <p class="chart-sub">1959–2025 · NASA GISTEMP, NOAA 마우나로아 관측소</p>
+      <div class="chart-tools">
+        <div class="toggle" role="tablist" aria-label="그래프 종류">
+          <button type="button" role="tab" id="tab-time" aria-controls="panel-time" data-panel="time" aria-selected="true">시간에 따른 변화</button>
+          <button type="button" role="tab" id="tab-scatter" aria-controls="panel-scatter" data-panel="scatter" aria-selected="false">두 값의 관계</button>
+        </div>
+      </div>
+
+      <div class="chartpanel" id="panel-time" role="tabpanel" aria-labelledby="tab-time" data-panel="time">
+        <svg class="chart-svg" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="1959년부터 2025년까지 전지구 평균기온 편차와 대기 중 이산화탄소 농도가 함께 상승하는 그래프">
+<line class="grid" x1="52" y1="266.1" x2="666" y2="266.1"/>
+<text class="axlbl left" x="43" y="270.1">0.0</text>
+<line class="grid" x1="52" y1="197.7" x2="666" y2="197.7"/>
+<text class="axlbl left" x="43" y="201.7">0.4</text>
+<line class="grid" x1="52" y1="129.2" x2="666" y2="129.2"/>
+<text class="axlbl left" x="43" y="133.2">0.8</text>
+<line class="grid" x1="52" y1="60.8" x2="666" y2="60.8"/>
+<text class="axlbl left" x="43" y="64.8">1.2</text>
+<text class="axlbl right" x="675" y="294.5">320</text>
+<text class="axlbl right" x="675" y="223.4">350</text>
+<text class="axlbl right" x="675" y="152.3">380</text>
+<text class="axlbl right" x="675" y="81.2">410</text>
+<text class="axlbl mid" x="61.3" y="348">1960</text>
+<text class="axlbl mid" x="200.8" y="348">1975</text>
+<text class="axlbl mid" x="340.4" y="348">1990</text>
+<text class="axlbl mid" x="479.9" y="348">2005</text>
+<text class="axlbl mid" x="619.5" y="348">2020</text>
+<line class="axis" x1="52" y1="326" x2="666" y2="326"/>
+<path class="line co2" d="M52.0,300.0 L61.3,297.8 L70.6,296.1 L79.9,294.1 L89.2,292.9 L98.5,291.4 L107.8,290.4 L117.1,287.2 L126.4,285.3 L135.7,283.2 L145.0,279.5 L154.3,277.0 L163.6,275.5 L172.9,272.8 L182.2,267.5 L191.5,266.3 L200.8,264.1 L210.2,262.0 L219.5,257.7 L228.8,254.0 L238.1,250.6 L247.4,246.0 L256.7,242.8 L266.0,239.6 L275.3,235.6 L284.6,231.5 L293.9,228.0 L303.2,225.0 L312.5,221.0 L321.8,215.4 L331.1,211.8 L340.4,208.8 L349.7,205.9 L359.0,203.9 L368.3,202.3 L377.6,198.2 L386.9,193.4 L396.2,189.2 L405.5,186.5 L414.8,179.5 L424.1,175.5 L433.4,172.7 L442.7,168.9 L452.0,163.8 L461.3,157.8 L470.6,153.8 L479.9,148.4 L489.2,143.4 L498.5,138.8 L507.8,134.5 L517.2,130.2 L526.5,124.4 L535.8,120.2 L545.1,115.0 L554.4,108.6 L563.7,103.7 L573.0,98.5 L582.3,90.5 L591.6,84.9 L600.9,80.3 L610.2,73.3 L619.5,67.3 L628.8,62.0 L638.1,57.0 L647.4,51.0 L656.7,42.6 L666.0,36.1"/>
+<path class="line temp" d="M52.0,260.8 L61.3,270.4 L70.6,256.1 L79.9,260.8 L89.2,257.0 L98.5,300.0 L107.8,284.4 L117.1,275.5 L126.4,270.3 L135.7,280.4 L145.0,257.3 L154.3,261.4 L163.6,279.8 L172.9,264.8 L182.2,238.6 L191.5,278.4 L200.8,268.4 L210.2,282.9 L219.5,235.6 L228.8,254.9 L238.1,238.4 L247.4,222.8 L256.7,211.2 L266.0,242.6 L275.3,212.9 L284.6,239.7 L293.9,246.0 L303.2,235.4 L312.5,211.4 L321.8,199.8 L331.1,219.5 L340.4,189.7 L349.7,196.8 L359.0,228.2 L368.3,226.6 L377.6,212.6 L386.9,190.3 L396.2,209.6 L405.5,186.5 L414.8,162.2 L424.1,201.0 L433.4,198.8 L442.7,175.1 L452.0,158.7 L461.3,160.9 L470.6,175.0 L479.9,150.0 L489.2,156.7 L498.5,152.5 L507.8,173.3 L517.2,153.7 L526.5,142.5 L535.8,162.3 L545.1,155.6 L554.4,150.5 L563.7,138.1 L573.0,112.8 L582.3,93.0 L591.6,109.7 L600.9,121.0 L610.2,98.8 L619.5,93.9 L628.8,121.2 L638.1,113.7 L647.4,66.3 L656.7,46.4 L666.0,62.2"/>
+<text class="axtitle" x="12" y="14">기온편차 ℃</text>
+<text class="axtitle end" x="710" y="14">CO₂ ppm</text>
+</svg>
+        <div class="chartlegend">
+          <span><i class="k-temp"></i>기온 편차 (왼쪽 축, ℃)</span>
+          <span><i class="k-co2"></i>CO₂ 농도 (오른쪽 축, ppm)</span>
+        </div>
+      </div>
+
+      <div class="chartpanel" id="panel-scatter" role="tabpanel" aria-labelledby="tab-scatter" data-panel="scatter" hidden>
+        <svg class="chart-svg" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="이산화탄소 농도가 높은 해일수록 기온 편차도 높게 나타나는 산점도">
+<line class="grid" x1="58" y1="261.3" x2="698" y2="261.3"/>
+<text class="axlbl left" x="49" y="265.3">0.0</text>
+<line class="grid" x1="58" y1="194.2" x2="698" y2="194.2"/>
+<text class="axlbl left" x="49" y="198.2">0.4</text>
+<line class="grid" x1="58" y1="127.1" x2="698" y2="127.1"/>
+<text class="axlbl left" x="49" y="131.1">0.8</text>
+<line class="grid" x1="58" y1="59.9" x2="698" y2="59.9"/>
+<text class="axlbl left" x="49" y="63.9">1.2</text>
+<text class="axlbl mid" x="109.2" y="342">320</text>
+<text class="axlbl mid" x="262.8" y="342">350</text>
+<text class="axlbl mid" x="416.4" y="342">380</text>
+<text class="axlbl mid" x="570.0" y="342">410</text>
+<line class="axis" x1="58" y1="320" x2="698" y2="320"/>
+<circle class="dot" cx="88.6" cy="256.1" r="4"/>
+<circle class="dot" cx="93.4" cy="265.5" r="4"/>
+<circle class="dot" cx="97.1" cy="251.5" r="4"/>
+<circle class="dot" cx="101.3" cy="256.1" r="4"/>
+<circle class="dot" cx="104.0" cy="252.3" r="4"/>
+<circle class="dot" cx="107.3" cy="294.5" r="4"/>
+<circle class="dot" cx="109.4" cy="279.2" r="4"/>
+<circle class="dot" cx="116.2" cy="270.5" r="4"/>
+<circle class="dot" cx="120.4" cy="265.3" r="4"/>
+<circle class="dot" cx="124.8" cy="275.3" r="4"/>
+<circle class="dot" cx="132.9" cy="252.6" r="4"/>
+<circle class="dot" cx="138.3" cy="256.7" r="4"/>
+<circle class="dot" cx="141.6" cy="274.7" r="4"/>
+<circle class="dot" cx="147.4" cy="260.0" r="4"/>
+<circle class="dot" cx="158.8" cy="234.3" r="4"/>
+<circle class="dot" cx="161.4" cy="273.3" r="4"/>
+<circle class="dot" cx="166.2" cy="263.5" r="4"/>
+<circle class="dot" cx="170.8" cy="277.8" r="4"/>
+<circle class="dot" cx="180.1" cy="231.4" r="4"/>
+<circle class="dot" cx="188.1" cy="250.2" r="4"/>
+<circle class="dot" cx="195.4" cy="234.1" r="4"/>
+<circle class="dot" cx="205.3" cy="218.8" r="4"/>
+<circle class="dot" cx="212.2" cy="207.5" r="4"/>
+<circle class="dot" cx="219.2" cy="238.2" r="4"/>
+<circle class="dot" cx="227.7" cy="209.1" r="4"/>
+<circle class="dot" cx="236.5" cy="235.4" r="4"/>
+<circle class="dot" cx="244.1" cy="241.6" r="4"/>
+<circle class="dot" cx="250.6" cy="231.2" r="4"/>
+<circle class="dot" cx="259.3" cy="207.6" r="4"/>
+<circle class="dot" cx="271.5" cy="196.3" r="4"/>
+<circle class="dot" cx="279.2" cy="215.6" r="4"/>
+<circle class="dot" cx="285.6" cy="186.3" r="4"/>
+<circle class="dot" cx="292.0" cy="193.3" r="4"/>
+<circle class="dot" cx="296.3" cy="224.1" r="4"/>
+<circle class="dot" cx="299.7" cy="222.6" r="4"/>
+<circle class="dot" cx="308.7" cy="208.8" r="4"/>
+<circle class="dot" cx="319.0" cy="186.9" r="4"/>
+<circle class="dot" cx="328.0" cy="205.9" r="4"/>
+<circle class="dot" cx="333.9" cy="183.3" r="4"/>
+<circle class="dot" cx="349.0" cy="159.4" r="4"/>
+<circle class="dot" cx="357.7" cy="197.4" r="4"/>
+<circle class="dot" cx="363.7" cy="195.3" r="4"/>
+<circle class="dot" cx="372.0" cy="172.1" r="4"/>
+<circle class="dot" cx="382.9" cy="156.0" r="4"/>
+<circle class="dot" cx="395.8" cy="158.1" r="4"/>
+<circle class="dot" cx="404.6" cy="171.9" r="4"/>
+<circle class="dot" cx="416.3" cy="147.5" r="4"/>
+<circle class="dot" cx="427.1" cy="154.0" r="4"/>
+<circle class="dot" cx="437.0" cy="149.8" r="4"/>
+<circle class="dot" cx="446.2" cy="170.3" r="4"/>
+<circle class="dot" cx="455.5" cy="151.1" r="4"/>
+<circle class="dot" cx="468.1" cy="140.1" r="4"/>
+<circle class="dot" cx="477.1" cy="159.5" r="4"/>
+<circle class="dot" cx="488.4" cy="152.9" r="4"/>
+<circle class="dot" cx="502.1" cy="147.9" r="4"/>
+<circle class="dot" cx="512.7" cy="135.7" r="4"/>
+<circle class="dot" cx="524.0" cy="111.0" r="4"/>
+<circle class="dot" cx="541.4" cy="91.5" r="4"/>
+<circle class="dot" cx="553.4" cy="107.9" r="4"/>
+<circle class="dot" cx="563.4" cy="119.0" r="4"/>
+<circle class="dot" cx="578.4" cy="97.3" r="4"/>
+<circle class="dot" cx="591.6" cy="92.4" r="4"/>
+<circle class="dot" cx="602.8" cy="119.2" r="4"/>
+<circle class="dot" cx="613.7" cy="111.8" r="4"/>
+<circle class="dot" cx="626.7" cy="65.4" r="4"/>
+<circle class="dot" cx="644.8" cy="45.8" r="4"/>
+<circle class="dot" cx="658.8" cy="61.3" r="4"/>
+<text class="axtitle" x="12" y="14">기온편차 ℃</text>
+<text class="axtitle mid" x="378" y="354">CO₂ 농도 (ppm)</text>
+</svg>
+        <div class="chartlegend">
+          <span><i class="k-co2"></i>점 하나 = 한 해 (가로: CO₂ 농도, 세로: 기온 편차)</span>
+        </div>
+      </div>
+    </div>
+
     <div class="card">
-      <h3>4단계 · 짧은 구간으로 단정하지 않기</h3>
-      <p>3년치 자료에서 기온이 내려갔다고 해서 장기 추세가 꺾인 것은 아닙니다. 자연 변동은 짧은 기간에 크게 요동칩니다.</p>
-      <div class="note"><strong>스스로 물어볼 것</strong> — 내 데이터 기간은 결론을 말하기에 충분히 긴가?</div>
+      <h3>추세는 매년 오르는 것과 다릅니다</h3>
+      <p>왼쪽 그래프에서 기온 선은 위로 향하지만 매년 오르지는 않습니다. 2021년은 2020년보다 오히려 낮습니다. <strong>추세는 긴 기간의 방향</strong>이고, 해마다의 오르내림은 그 위에 얹힌 변동입니다. 한두 해가 내려갔다고 추세가 꺾인 것은 아니며, 반대로 한두 해가 크게 올랐다고 추세가 가팔라진 것도 아닙니다.</p>
     </div>
+
     <div class="card">
-      <h3>5단계 · 원하는 구간만 잘라 쓰지 않기</h3>
-      <p>결론에 맞는 연도만 골라내면 어떤 주장이든 만들 수 있습니다. 이것이 체리피킹이고, 신뢰를 가장 쉽게 잃는 방법입니다.</p>
-      <div class="note"><strong>스스로 물어볼 것</strong> — 내가 뺀 데이터가 있다면, 왜 뺐는지 설명할 수 있는가?</div>
+      <h3>상관계수 r — 함께 움직인 정도를 하나의 숫자로</h3>
+      <p>두 값이 얼마나 나란히 움직였는지는 <span class="mono">r</span> 하나로 요약할 수 있습니다. <span class="mono">+1</span>에 가까울수록 같이 오르고, <span class="mono">-1</span>에 가까울수록 반대로 움직이며, <span class="mono">0</span>에 가까우면 관계가 뚜렷하지 않습니다.</p>
+      <p>이 두 자료의 값은 <strong>r ≈ 0.97</strong>입니다. 오른쪽 그래프에서 점들이 거의 직선을 이루는 것이 그 모습입니다. 다만 <span class="mono">r</span>이 말해 주는 것은 딱 여기까지입니다 — <strong>함께 움직였다</strong>는 사실뿐입니다.</p>
+    </div>
+
+    <div class="quiz" data-answer="pos">
+      <span class="qlabel">확인 문제 1</span>
+      <p class="qtext">두 그래프에서 기온 편차와 CO₂ 농도는 어떤 관계로 보이나요?</p>
+      <div class="choices">
+        <button type="button" data-val="pos" data-fb="맞습니다. 한쪽이 오를 때 다른 쪽도 오르는 양의 상관관계이고, r ≈ 0.97로 매우 강한 편입니다.">양의 상관관계</button>
+        <button type="button" data-val="neg" data-fb="다시 확인해 보세요. 음의 상관관계는 한쪽이 오를 때 다른 쪽이 내려가는 경우입니다. 여기서는 두 값이 함께 오르고 있습니다.">음의 상관관계</button>
+        <button type="button" data-val="none" data-fb="다시 확인해 보세요. 관계가 없다면 산점도의 점들이 흩어져 있어야 하는데, 여기서는 거의 직선을 이루고 있습니다.">뚜렷한 관계 없음</button>
+      </div>
+      <p class="fb" role="status"></p>
     </div>
   </div>
+</section>
 
-  <div class="chartbox">
-    <div class="chart-head">
-      <div>
-        <div class="chart-title">6단계 · 그래프도 거짓말을 할 수 있다</div>
-        <div style="font-size:12px;color:var(--mist);margin-top:3px">연습용 학급 설문 데이터 · 물복 62명 / 딱복 51명</div>
-      </div>
-      <div class="toggle" role="group" aria-label="그래프 표현 방식">
-        <button id="tgA" aria-pressed="true">축 자르기</button>
-        <button id="tgB" aria-pressed="false">0부터 그리기</button>
-      </div>
+<!-- ============ 04 ============ -->
+<section class="stepsection">
+  <div class="wrap">
+    <div class="section-head">
+      <h2><span class="idx">04</span>상관관계는 인과관계가 아닙니다</h2>
     </div>
-    <svg id="distortChart" viewBox="0 0 620 260" role="img" aria-label="물복 딱복 선호 비교 막대그래프"></svg>
-    <div class="verdict v-bad" id="verdictBox"></div>
-  </div>
+    <p class="lead">이 페이지에서 가장 중요한 한 문장입니다.</p>
 
-  <div class="card">
-    <h3>실제 왜곡 사례 모음 <span class="badge b-todo">사례 추가 예정</span></h3>
-    <p>언론 보도나 홍보 자료에서 실제로 쓰인 그래프 왜곡 사례 2~3건을 비교 이미지로 넣을 예정입니다. 3차원 파이차트, 축 뒤집기, 면적 왜곡 등을 다룹니다.</p>
+    <div class="note tide">r이 아무리 1에 가까워도, 그것만으로는 <strong>한쪽이 다른 쪽의 원인이라고 말할 수 없습니다.</strong></div>
+
+    <div class="card">
+      <h3>이유 1 — 어느 쪽이 원인인지 알려주지 않는다</h3>
+      <p>상관계수는 두 값이 함께 움직였다는 사실만 담고 있습니다. A가 B를 일으켰는지, B가 A를 일으켰는지, 계산 결과만 봐서는 구분할 수 없습니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>이유 2 — 뒤에 제3의 원인이 숨어 있을 수 있다</h3>
+      <p>아이스크림 판매량과 물놀이 사고 건수는 함께 오릅니다. 아이스크림이 사고를 일으키는 것이 아니라, <strong>여름</strong>이라는 공통 원인이 둘 다 끌어올린 것입니다. 두 값이 나란히 움직였다는 것만으로는 이 경우와 구분되지 않습니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>그럼 CO₂와 기온은요?</h3>
+      <p>이 경우는 인과를 말할 수 있습니다. 다만 근거는 <span class="mono">r = 0.97</span>이 아닙니다. CO₂가 지구가 내보내는 적외선을 흡수해 대기에 열을 붙잡아 둔다는 <strong>온실효과라는 물리적 메커니즘</strong>이 실험과 관측으로 따로 검증되어 있기 때문입니다. 상관관계는 그 메커니즘과 관측이 어긋나지 않는다는 것을 보여 줄 뿐입니다.</p>
+      <p>정리하면 <strong>숫자 + 메커니즘</strong>이 함께 있을 때만 원인을 말합니다. 여러분이 웹앱에서 "A 때문에 B가 일어난다"고 쓰려 한다면, 그 메커니즘을 설명할 수 있는지 먼저 확인해야 합니다.</p>
+    </div>
+
+    <div class="quiz" data-answer="mech">
+      <span class="qlabel">확인 문제 2</span>
+      <p class="qtext">"CO₂ 증가가 기온 상승의 원인이다"라고 말하려면, 상관계수 외에 무엇이 더 필요할까요?</p>
+      <div class="choices">
+        <button type="button" data-val="more" data-fb="자료를 늘려도 상관관계는 여전히 상관관계입니다. r이 0.99가 되어도 원인을 말해 주지는 않습니다.">더 많은 연도의 자료</button>
+        <button type="button" data-val="mech" data-fb="맞습니다. 온실효과처럼 왜 그런 일이 일어나는지를 설명하는 메커니즘이 따로 검증되어야 인과를 말할 수 있습니다.">그 관계가 성립하는 메커니즘</button>
+        <button type="button" data-val="chart" data-fb="그래프를 예쁘게 그리는 것은 전달의 문제이지, 인과의 근거가 되지는 않습니다.">더 보기 좋은 그래프</button>
+      </div>
+      <p class="fb" role="status"></p>
+    </div>
   </div>
+</section>
+
+<!-- ============ 05 ============ -->
+<section class="stepsection">
+  <div class="wrap">
+    <div class="section-head">
+      <h2><span class="idx">05</span>자주 걸려 넘어지는 네 가지</h2>
+    </div>
+    <p class="lead">루브릭의 데이터 리터러시·과학적 타당성 항목에서 감점이 나는 지점이기도 합니다.</p>
+
+    <div class="check"><strong>튀는 값을 그냥 지나친다</strong><span>주변과 크게 동떨어진 값은 실제 현상일 수도, 측정·입력 오류일 수도 있습니다. 지우든 남기든, 왜 그렇게 했는지 밝혀야 합니다.</span></div>
+    <div class="check"><strong>그래프 축으로 인상을 조작한다</strong><span>세로축의 시작점을 바꾸는 것만으로 같은 변화가 완만해 보이거나 급격해 보입니다. 축 범위는 과장하지 않는 선에서 정합니다.</span></div>
+    <div class="check"><strong>유리한 구간만 잘라 쓴다</strong><span>1998년부터 2012년만 보면 기온 상승이 거의 멈춘 것처럼 보입니다. 구간을 왜 그렇게 정했는지 설명할 수 없다면, 그 구간은 잘못 고른 것입니다.</span></div>
+    <div class="check"><strong>데이터가 말하지 않은 것까지 말한다</strong><span>전지구 평균 자료로는 특정 지역의 내년 날씨를 말할 수 없습니다. 결론은 분석한 범위 안에 두어야 합니다.</span></div>
+
+    <div class="quiz" data-answer="crop">
+      <span class="qlabel">확인 문제 3</span>
+      <p class="qtext">1959년부터 2025년까지의 자료를 가지고 있는데, 그래프에는 2015년 이후만 그려 "최근 기온이 안정적이다"라고 썼습니다. 무엇이 문제일까요?</p>
+      <div class="choices">
+        <button type="button" data-val="crop" data-fb="맞습니다. 가진 자료 중 일부만 잘라 쓰면 전체 추세와 다른 인상을 줍니다. 구간을 좁혔다면 왜 좁혔는지 밝혀야 합니다.">전체 자료 중 유리한 구간만 썼다</button>
+        <button type="button" data-val="old" data-fb="최근 자료를 쓰는 것 자체는 문제가 아닙니다. 문제는 가진 자료의 대부분을 이유 없이 버린 데 있습니다.">최근 자료를 써서 오래된 경향을 놓쳤다</button>
+        <button type="button" data-val="unit" data-fb="단위는 이 상황의 쟁점이 아닙니다. 다시 한 번 생각해 보세요.">단위를 ℃가 아닌 다른 것으로 써야 한다</button>
+      </div>
+      <p class="fb" role="status"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 ============ -->
+<section class="stepsection">
+  <div class="wrap">
+    <div class="section-head">
+      <h2><span class="idx">06</span>다음 단계에서 할 일</h2>
+    </div>
+    <p class="lead">여기까지가 읽는 단계이고, 이제부터는 직접 하는 단계입니다.</p>
+
+    <div class="card">
+      <h3>이 과정을 여러분이 직접 하게 됩니다</h3>
+      <p>이 페이지에서 본 <strong>불러오기 → 정리하기 → 패턴 찾기 → 해석하기</strong>를 여러분의 주제로 반복하는 것이 앞으로의 일입니다. 쓸 수 있는 데이터 주소는 <strong>4단계</strong>에서, 그 데이터로 무엇을 말할지는 <strong>5단계 기획안</strong>에서 정합니다.</p>
+      <p>기획안에는 <strong>어떤 주소에서 받았는지, 어떤 처리를 했는지</strong>를 반드시 적습니다. 그것이 이 페이지에서 GISTEMP만 걸러낸 이유를 밝힌 것과 같은 일입니다.</p>
+    </div>
+
+    <div class="note tide">기억할 두 가지 — 데이터가 뒷받침하는 범위 안에서만 말한다. 함께 움직였다는 것과 원인이라는 것은 다르다.</div>
+
+    <nav class="pagenav">
+      <a href="step1.html">← 목표 및 평가 항목</a>
+      <a class="nav-home" href="index.html">메인으로</a>
+      <a href="step3.html">웹앱 제작 연습 →</a>
+    </nav>
+  </div>
+</section>
+
 </main>
-
-<nav class="pagenav">
-  <a href="step1.html">← 이전 단계</a>
-  <a href="index.html" class="center" style="border:0;padding:0">메인 페이지</a>
-  <a href="step3.html">다음 단계 →</a>
-</nav>
 
 <script src="script.js"></script>
 </body>

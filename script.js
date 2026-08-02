@@ -70,3 +70,77 @@ document.addEventListener("DOMContentLoaded", function () {
     renderSubmitDates(select.value);
   });
 });
+
+
+/* ============================================================
+   step2 — 개념 확인 문제 / 차트 전환 / 코드 복사
+   (해당 요소가 없는 페이지에서는 아무 일도 하지 않는다)
+   ============================================================ */
+
+/* 개념 확인 문제: 선택 → 즉시 피드백. 점수·기록은 남기지 않는다. */
+function initQuiz() {
+  document.querySelectorAll(".quiz").forEach(function (quiz) {
+    const answer = quiz.dataset.answer;
+    const fb = quiz.querySelector(".fb");
+    quiz.querySelectorAll(".choices button").forEach(function (btn) {
+      btn.setAttribute("aria-pressed", "false");
+      btn.addEventListener("click", function () {
+        quiz.querySelectorAll(".choices button").forEach(function (b) {
+          b.setAttribute("aria-pressed", "false");
+        });
+        btn.setAttribute("aria-pressed", "true");
+        const correct = btn.dataset.val === answer;
+        fb.className = "fb " + (correct ? "ok" : "no");
+        fb.textContent = btn.dataset.fb || "";
+      });
+    });
+  });
+}
+
+/* 차트 전환 토글: .toggle button[data-panel] → 같은 .chartbox 안의 패널 표시 */
+function initChartToggle() {
+  document.querySelectorAll(".chartbox .toggle").forEach(function (toggle) {
+    const box = toggle.closest(".chartbox");
+    toggle.querySelectorAll("button[data-panel]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        toggle.querySelectorAll("button[data-panel]").forEach(function (b) {
+          b.setAttribute("aria-selected", String(b === btn));
+        });
+        box.querySelectorAll(".chartpanel").forEach(function (panel) {
+          panel.hidden = panel.dataset.panel !== btn.dataset.panel;
+        });
+      });
+    });
+  });
+}
+
+/* 코드 블록 복사 버튼 */
+function initCopyButtons() {
+  document.querySelectorAll(".codeblock .copy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const pre = btn.parentElement.querySelector("pre");
+      if (!pre) return;
+      const done = function (msg) {
+        btn.textContent = msg;
+        btn.classList.add("done");
+        setTimeout(function () {
+          btn.textContent = "코드 복사";
+          btn.classList.remove("done");
+        }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(pre.innerText)
+          .then(function () { done("복사됨"); })
+          .catch(function () { btn.textContent = "직접 선택해 주세요"; });
+      } else {
+        btn.textContent = "직접 선택해 주세요";
+      }
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  initQuiz();
+  initChartToggle();
+  initCopyButtons();
+});
