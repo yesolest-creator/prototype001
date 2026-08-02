@@ -103,7 +103,7 @@ code,kbd,.mono{font-family:var(--font-mono);font-size:.92em;}
 /* 상단 우측 킥커 (메인 masthead 킥커와 동일 톤) */
 .topbar .kicker{
   font-family:var(--font-mono);
-  font-size:9.5px;
+  font-size:10px;
   letter-spacing:.12em;
   text-transform:uppercase;
   color:var(--tide);
