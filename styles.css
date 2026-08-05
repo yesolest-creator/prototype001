@@ -458,6 +458,7 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
 .btn[disabled],.btn[aria-disabled="true"]{
   opacity:.45;cursor:not-allowed;transform:none;
 }
+.btn[hidden]{display:none;}
 
 /* ---------- 11. .chartbox / .toggle ---------- */
 .chartbox{
@@ -784,6 +785,11 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   line-height:1.6;
   color:var(--slate);
 }
+.flowsteps em{
+  font-style:normal;
+  font-weight:600;
+  color:var(--abyss);
+}
 
 /* ---------- 20. .srclist / .codeblock / .datapeek — 데이터 불러오기 ---------- */
 .srclist{
@@ -796,6 +802,12 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   box-shadow:var(--shadow);
 }
 .srclist .src{flex-wrap:wrap;gap:4px 12px;}
+.srclist .src .src-desc{
+  flex:1 1 100%;
+  font-size:13.5px;
+  line-height:1.65;
+  color:var(--slate);
+}
 
 .codeblock{
   position:relative;
@@ -917,7 +929,76 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   margin:26px 0 12px;
 }
 
-/* ---------- 21. 차트 SVG ---------- */
+/* ---------- 21. .loader — URL 입력 + 불러오기 ---------- */
+.loader{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:20px 22px;
+  margin:0 0 16px;
+}
+.loader .lfield{margin-bottom:12px;}
+.loader .lfield label{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--mist);
+  margin-bottom:6px;
+}
+.loader .lfield input{
+  width:100%;
+  font-family:var(--font-mono);
+  font-size:12.5px;
+  color:var(--abyss);
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:10px 13px;
+  transition:border-color .15s ease, background .15s ease;
+}
+.loader .lfield input::placeholder{color:var(--mist);}
+.loader .lfield input:focus-visible{border-color:var(--abyss);background:var(--white);}
+.loader .lbtns{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:16px;
+}
+.loader .lstate{
+  font-size:13px;
+  color:var(--slate);
+  line-height:1.6;
+}
+.loader .lstate.err{color:var(--alert);}
+.loader .lstate.ok{color:#2F6079;}
+
+/* 저장된 자료 사용 중 표시 */
+.srcflag{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.06em;
+  padding:4px 9px;
+  border-radius:5px;
+  background:var(--tide-dim);
+  color:#3B6E88;
+  border:1px solid rgba(147,190,213,.6);
+  white-space:nowrap;
+}
+.srcflag[data-src="fallback"]{
+  background:rgba(216,168,125,.16);
+  color:#9A6A38;
+  border-color:rgba(216,168,125,.45);
+}
+
+/* ---------- 22. 차트 SVG ---------- */
 .chartbox .chart-tools{margin-bottom:14px;}
 .chart-svg{width:100%;height:auto;display:block;}
 .chart-svg .grid{stroke:var(--line);stroke-width:1;}
@@ -938,10 +1019,25 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
 }
 .chart-svg .axtitle.end{text-anchor:end;}
 .chart-svg .axtitle.mid{text-anchor:middle;}
+.chart-svg .panelttl{
+  font-family:var(--font-heading);
+  font-size:12.5px;
+  font-weight:700;
+  fill:var(--abyss);
+  text-anchor:middle;
+}
 .chart-svg .line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;}
 .chart-svg .line.temp{stroke:var(--alert);}
 .chart-svg .line.co2{stroke:#4E86A6;}
-.chart-svg .dot{fill:#4E86A6;fill-opacity:.55;}
+.chart-svg .line.fit{stroke:var(--abyss);stroke-width:2;}
+.chart-svg .line.fit2{stroke:var(--alert);stroke-width:2;}
+.chart-svg .line.faint{stroke:var(--mist);stroke-width:1.4;opacity:.55;}
+.chart-svg .line.pick{stroke:var(--alert);stroke-width:2.4;}
+.chart-svg .line.ext{stroke-dasharray:5 4;}
+.chart-svg .dot{fill:#4E86A6;fill-opacity:.5;}
+.chart-svg .dot.plain{fill:var(--slate);fill-opacity:.5;}
+.chart-svg .dot.out{fill:var(--alert);fill-opacity:.95;}
+.chart-svg .band{fill:rgba(147,190,213,.16);}
 .chartlegend{
   display:flex;
   gap:18px;
@@ -956,11 +1052,130 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
 .chartlegend i{
   width:14px;height:3px;border-radius:2px;display:inline-block;
 }
+.chartlegend i.dash{
+  background:none;
+  border-top:3px dashed var(--abyss);
+  height:0;
+}
 .chartlegend .k-temp{background:var(--alert);}
 .chartlegend .k-co2{background:#4E86A6;}
+.chartlegend .k-fit{background:var(--abyss);}
+.chartlegend .k-fit2{background:var(--alert);}
+.chartlegend .k-faint{background:var(--mist);}
 .chartpanel[hidden]{display:none;}
+.chart-cap{
+  margin-top:12px;
+  font-size:13.2px;
+  line-height:1.65;
+  color:var(--slate);
+}
+.chart-empty{
+  display:grid;
+  place-items:center;
+  min-height:180px;
+  padding:24px;
+  border:1px dashed var(--line);
+  border-radius:8px;
+  font-size:13.5px;
+  color:var(--mist);
+  text-align:center;
+}
 
-/* ---------- 22. .quiz — 개념 확인 문제 ---------- */
+/* ---------- 23. .formula — 수식 표기 ---------- */
+.formula{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:16px 0;
+  padding:18px 16px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:8px;
+  font-family:var(--font-mono);
+  font-size:15px;
+  color:var(--abyss);
+  overflow-x:auto;
+}
+.formula .frac{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  vertical-align:middle;
+  font-size:13px;
+}
+.formula .frac .top{padding:0 8px 5px;}
+.formula .frac .bot{padding:5px 8px 0;border-top:1.5px solid var(--abyss);}
+.formula .sqrt{
+  display:inline-block;
+  position:relative;
+  padding:2px 4px 0 2px;
+  margin-left:9px;
+  border-top:1.5px solid var(--abyss);
+}
+.formula .sqrt::before{
+  content:"√";
+  position:absolute;
+  left:-9px;top:-2px;
+  font-size:1.25em;
+  line-height:1;
+}
+.formula .eq{font-size:16px;}
+
+/* 표 바깥(.card 등)에서도 쓰는 목록 — .table .lines와 동일한 모양 */
+.card .lines,.chartbox .lines{list-style:none;margin:10px 0 0;padding:0;}
+.card .lines li,.chartbox .lines li{
+  position:relative;
+  padding-left:13px;
+  line-height:1.65;
+}
+.card .lines li+li,.chartbox .lines li+li{margin-top:5px;}
+.card .lines li::before,.chartbox .lines li::before{
+  content:"";
+  position:absolute;left:0;top:.72em;
+  width:5px;height:1px;
+  background:var(--mist);
+}
+
+/* ---------- 24. .methodgrid — 중급·심화 방법 개요 ---------- */
+.methodgrid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin:0 0 18px;
+  padding:0;
+  list-style:none;
+}
+.methodgrid li{
+  padding:18px 18px 16px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.methodgrid .mhead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:9px;
+}
+.methodgrid h3{
+  font-size:15.5px;
+  letter-spacing:-.02em;
+}
+.methodgrid p{
+  font-size:13.2px;
+  line-height:1.65;
+  color:var(--slate);
+}
+/* 난이도 배지 */
+.badge.b-lv1{background:var(--tide-dim);color:#3B6E88;border-color:rgba(147,190,213,.6);}
+.badge.b-lv2{background:rgba(154,165,173,.16);color:var(--slate);border-color:rgba(154,165,173,.45);}
+.badge.b-lv3{background:rgba(216,168,125,.16);color:#9A6A38;border-color:rgba(216,168,125,.45);}
+
+/* ---------- 25. .quiz — 개념 확인 문제 ---------- */
 .quiz{
   margin-top:22px;
   padding:20px 22px;
@@ -1030,13 +1245,14 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   border-left:3px solid var(--signal);
 }
 
-/* ---------- 23. 반응형 ---------- */
+/* ---------- 26. 반응형 ---------- */
 @media (max-width:900px){
   .hubgrid{grid-template-columns:repeat(2,minmax(0,1fr));}
-  .flowsteps{grid-template-columns:repeat(2,minmax(0,1fr));}
   .qset{grid-template-columns:1fr;gap:24px;}
   .qset-label{margin-bottom:-8px;}
   .masthead{padding:56px 0 50px;}
+  .flowsteps{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .methodgrid{grid-template-columns:repeat(2,minmax(0,1fr));}
 }
 @media (max-width:600px){
   .wrap{padding:0 18px;}
@@ -1055,13 +1271,18 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   .table{font-size:14px;min-width:460px;}
   .table th,.table td{padding:12px 14px;}
   .selectbar select{width:100%;}
-  .flowsteps{grid-template-columns:1fr;gap:10px;}
-  .statrow{grid-template-columns:1fr;gap:10px;}
+  .flowsteps,.methodgrid,.statrow{grid-template-columns:1fr;}
+  .card{padding:20px 18px;}
+  .loader{padding:18px 16px;}
+  .loader .lbtns .btn{flex:1 1 auto;}
   .quiz{padding:18px 16px;}
-  .quiz .choices{flex-direction:column;align-items:stretch;}
+  .quiz .choices{flex-direction:column;}
+  .quiz .choices button{width:100%;}
+  .formula{font-size:13px;padding:16px 12px;justify-content:flex-start;}
+  .toggle{width:100%;overflow-x:auto;}
 }
 
-/* ---------- 24. 모션 최소화 ---------- */
+/* ---------- 27. 모션 최소화 ---------- */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{
     animation-duration:.01ms !important;
@@ -1071,7 +1292,7 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   }
 }
 
-/* ---------- 25. 인쇄 ---------- */
+/* ---------- 28. 인쇄 ---------- */
 @media print{
   .masthead{background:none;color:var(--abyss);padding:20px 0;}
   .masthead::before{display:none;}
@@ -1080,12 +1301,12 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
   .topbar{background:none;color:var(--abyss);border-bottom:1px solid var(--line);}
   .topbar .crumb,.topbar .crumb strong,.topbar .brand,.topbar .kicker{color:var(--abyss);}
   .savenote,.selectbar,.pagenav,.steptrack{display:none;}
-  .codeblock .copy,.chartbox .chart-tools{display:none;}
-  .codeblock{background:none;border:1px solid var(--line);}
-  .codeblock pre{color:var(--abyss);}
-  .quiz{break-inside:avoid;box-shadow:none;}
-  .chartpanel[hidden]{display:block;}
   .tablewrap{box-shadow:none;overflow:visible;}
   .table{min-width:0;}
   .table tr{break-inside:avoid;}
+  .codeblock{background:none;border:1px solid var(--line);}
+  .codeblock pre{color:var(--abyss);}
+  .codeblock .copy,.loader .lbtns,.toggle{display:none;}
+  .card,.chartbox,.quiz,.flowsteps li,.methodgrid li{break-inside:avoid;box-shadow:none;}
+  .chartpanel[hidden]{display:block !important;}
 }
