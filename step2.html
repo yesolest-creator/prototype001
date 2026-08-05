@@ -286,7 +286,7 @@ df = pd.merge(temp, co2, on=<span class="st">'Year'</span>)</pre>
     <div class="card">
       <h3>상관계수 r</h3>
       <p>두 값이 얼마나 나란히 움직였는지는 숫자 하나로도 요약할 수 있습니다. 이 숫자를 <strong>상관계수(r)</strong>라 부릅니다.</p>
-      <ul class="lines">
+      <ul class="lines" style="padding-left:20px;">
         <li><span class="mono">+1</span>에 가까움 — 같이 오른다</li>
         <li><span class="mono">−1</span>에 가까움 — 반대로 움직인다</li>
         <li><span class="mono">0</span>에 가까움 — 뚜렷한 관계가 없다</li>
@@ -297,11 +297,11 @@ df = pd.merge(temp, co2, on=<span class="st">'Year'</span>)</pre>
     <div class="card">
       <h3>r은 어떻게 계산하나</h3>
       <p>두 변수 <span class="mono">x</span>(기온), <span class="mono">y</span>(CO₂)에 대해, r은 다음과 같이 구합니다.</p>
-      <div class="formula">
-        <span class="eq">r =</span>
-        <span class="frac">
-          <span class="top">Σ(xᵢ − x̄)(yᵢ − ȳ)</span>
-          <span class="bot"><span class="sqrt">Σ(xᵢ − x̄)²</span> <span class="sqrt">Σ(yᵢ − ȳ)²</span></span>
+      <div class="formula" style="display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0;padding:20px 16px;background:#EFEDE7;border:1px solid #D8D3C8;border-radius:8px;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:15px;color:#2C363F;overflow-x:auto;">
+        <span class="eq" style="font-size:16px;">r =</span>
+        <span class="frac" style="display:inline-flex;flex-direction:column;align-items:center;font-size:13px;">
+          <span class="top" style="padding:0 8px 5px;">Σ(xᵢ − x̄)(yᵢ − ȳ)</span>
+          <span class="bot" style="padding:6px 8px 0;border-top:1.5px solid #2C363F;white-space:nowrap;"><span class="rad" style="font-size:1.25em;line-height:1;vertical-align:-0.12em;">√</span><span class="radbar" style="display:inline-block;padding:2px 3px 0;border-top:1.5px solid #2C363F;">Σ(xᵢ − x̄)²</span>&#8202;<span class="rad" style="font-size:1.25em;line-height:1;vertical-align:-0.12em;">√</span><span class="radbar" style="display:inline-block;padding:2px 3px 0;border-top:1.5px solid #2C363F;">Σ(yᵢ − ȳ)²</span></span>
         </span>
       </div>
       <p>각 해마다 기온과 CO₂가 평균에서 얼마나 벗어났는지를 구한 뒤, 두 값이 같은 방향으로 움직인 정도를 곱해 더합니다. 분모는 이 값을 −1~+1 범위로 맞추는 역할을 합니다.</p>
@@ -322,7 +322,7 @@ df = pd.merge(temp, co2, on=<span class="st">'Year'</span>)</pre>
     <h3 class="subhead">관련이 있다고 원인은 아니다</h3>
     <div class="card">
       <p>r = <span class="mono" data-rval>—</span>은 두 값이 강하게 함께 움직였다는 뜻일 뿐, <strong>CO₂가 기온을 올렸다는 증거는 아닙니다.</strong> 두 값이 함께 움직이는 이유는 여러 가지일 수 있습니다.</p>
-      <ul class="lines">
+      <ul class="lines" style="padding-left:20px;">
         <li>진짜 한쪽이 다른 쪽의 원인일 수도 있고</li>
         <li>반대로 원인과 결과가 뒤바뀌었을 수도 있고</li>
         <li>둘 다 제3의 원인 때문에 함께 움직였을 수도 있습니다. (아이스크림 판매량과 물놀이 사고 건수가 함께 오르는 건, 둘 다 “더운 날씨” 때문이지 아이스크림이 사고를 일으켜서가 아닙니다.)</li>
@@ -373,7 +373,7 @@ df = pd.merge(temp, co2, on=<span class="st">'Year'</span>)</pre>
     <div class="card">
       <h3>적합한 차수 고르는 법</h3>
       <p>차수를 올릴수록 R²은 항상 오릅니다. 8차 곡선의 R²은 <strong class="mono" id="reg-r2-8">—</strong>으로, 2차와 큰 차이가 없습니다. 반면 데이터 범위 밖(미래 예측 구간)에서는 곡선이 비현실적으로 요동칩니다 — <strong>과적합</strong>입니다.</p>
-      <ul class="lines">
+      <ul class="lines" style="padding-left:20px;">
         <li>R² 상승 폭이 눈에 띄게 줄어드는 지점까지만 차수를 올립니다.</li>
         <li>데이터 밖 구간에서 그래프가 심하게 흔들리면 차수가 과한 것입니다.</li>
       </ul>
@@ -508,7 +508,7 @@ df = pd.merge(temp, co2, on=<span class="st">'Year'</span>)</pre>
 
     <div class="card">
       <h3>앞으로 이어지는 것</h3>
-      <ul class="lines">
+      <ul class="lines" style="padding-left:20px;">
         <li><strong>웹앱 제작 연습(다음 단계)</strong>에서는 오늘 익힌 개념을 실제 코드로 옮기는 도구를 다뤄봅니다.</li>
         <li><strong>데이터 활용 가이드</strong>에서는 주제별로 쓸 수 있는 공공데이터 소스를 안내합니다. 오늘 다룬 기온·CO₂ 자료가 그중 하나였을 뿐입니다.</li>
         <li><strong>기획안 작성</strong>에서는 여러분이 고른 주제에 오늘 배운 상관·회귀 중 무엇을 쓸지 직접 정하고, 관찰-연결-임팩트-요청 4단계로 메시지를 설계합니다.</li>

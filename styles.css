@@ -690,7 +690,7 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
 .table .lines{list-style:none;margin:0;padding:0;}
 .table .lines li{
   position:relative;
-  padding-left:13px;
+  padding-left:15px;
   line-height:1.6;
 }
 .table .lines li+li{margin-top:5px;}
@@ -1107,27 +1107,19 @@ a.hubcard:hover .go{color:var(--abyss);transform:translateX(3px);}
 }
 .formula .frac .top{padding:0 8px 5px;}
 .formula .frac .bot{padding:5px 8px 0;border-top:1.5px solid var(--abyss);}
-.formula .sqrt{
+.formula .rad{font-size:1.25em;line-height:1;vertical-align:-.12em;}
+.formula .radbar{
   display:inline-block;
-  position:relative;
-  padding:2px 4px 0 2px;
-  margin-left:9px;
+  padding:2px 3px 0;
   border-top:1.5px solid var(--abyss);
-}
-.formula .sqrt::before{
-  content:"√";
-  position:absolute;
-  left:-9px;top:-2px;
-  font-size:1.25em;
-  line-height:1;
 }
 .formula .eq{font-size:16px;}
 
 /* 표 바깥(.card 등)에서도 쓰는 목록 — .table .lines와 동일한 모양 */
-.card .lines,.chartbox .lines{list-style:none;margin:10px 0 0;padding:0;}
+.card .lines,.chartbox .lines{list-style:none;margin:10px 0 0;padding-left:20px;}
 .card .lines li,.chartbox .lines li{
   position:relative;
-  padding-left:13px;
+  padding-left:15px;
   line-height:1.65;
 }
 .card .lines li+li,.chartbox .lines li+li{margin-top:5px;}

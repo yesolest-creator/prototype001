@@ -233,7 +233,27 @@ function s2merge(temp, co2) {
 }
 
 
-/* ---------- SVG 차트 helper ---------- */
+/* ---------- SVG 차트 helper ----------
+   색·굵기를 CSS 클래스가 아니라 SVG 속성으로 직접 지정한다.
+   styles.css가 어긋나 있어도 그래프가 정상적으로 그려지게 하기 위함이다.
+   (클래스도 함께 남겨두므로 CSS 쪽에서 덮어쓰는 것도 가능하다) */
+const S2C = {
+  grid:   "#D8D3C8",
+  axis:   "#9AA5AD",
+  lbl:    "#9AA5AD",
+  axtitle:"#5A6570",
+  head:   "#2C363F",
+  temp:   "#B25A50",
+  co2:    "#4E86A6",
+  fit:    "#2C363F",
+  fit2:   "#B25A50",
+  faint:  "#B6BFC6",
+  dot:    "#4E86A6",
+  plain:  "#7C8791",
+  band:   "#DCEAF0",
+  mono:   "'JetBrains Mono', ui-monospace, Menlo, monospace"
+};
+
 function s2ticks(min, max, count) {
   const span = max - min;
   if (span <= 0) return [min];
@@ -248,6 +268,13 @@ function s2ticks(min, max, count) {
   return out;
 }
 
+/* 축 눈금 글자 */
+function s2text(x, y, s, anchor, color, size, weight) {
+  return '<text x="' + x + '" y="' + y + '" text-anchor="' + (anchor || "start") +
+    '" fill="' + (color || S2C.lbl) + '" font-size="' + (size || 10.5) +
+    '" font-weight="' + (weight || 400) + '" font-family="' + S2C.mono + '">' + s + '</text>';
+}
+
 /* 좌표계(패널) 하나 만들기 */
 function s2panel(o) {
   const sx = function (v) { return o.x + (v - o.xmin) / (o.xmax - o.xmin) * o.w; };
@@ -259,35 +286,55 @@ function s2panel(o) {
   yt.forEach(function (v) {
     const py = sy(v);
     if (py < o.y - 1 || py > o.y + o.h + 1) return;
-    g += '<line class="grid" x1="' + o.x + '" y1="' + py.toFixed(1) + '" x2="' + (o.x + o.w) + '" y2="' + py.toFixed(1) + '"/>';
-    g += '<text class="axlbl left" x="' + (o.x - 8) + '" y="' + (py + 3.5).toFixed(1) + '">' + (o.yfmt ? o.yfmt(v) : v) + '</text>';
+    g += '<line x1="' + o.x + '" y1="' + py.toFixed(1) + '" x2="' + (o.x + o.w) +
+      '" y2="' + py.toFixed(1) + '" stroke="' + S2C.grid + '" stroke-width="1"/>';
+    g += s2text(o.x - 8, (py + 3.5).toFixed(1), (o.yfmt ? o.yfmt(v) : v), "end");
   });
   xt.forEach(function (v) {
     const px = sx(v);
     if (px < o.x - 1 || px > o.x + o.w + 1) return;
-    g += '<text class="axlbl mid" x="' + px.toFixed(1) + '" y="' + (o.y + o.h + 17) + '">' + (o.xfmt ? o.xfmt(v) : v) + '</text>';
+    g += s2text(px.toFixed(1), o.y + o.h + 17, (o.xfmt ? o.xfmt(v) : v), "middle");
   });
-  g += '<line class="axis" x1="' + o.x + '" y1="' + (o.y + o.h) + '" x2="' + (o.x + o.w) + '" y2="' + (o.y + o.h) + '"/>';
+  g += '<line x1="' + o.x + '" y1="' + (o.y + o.h) + '" x2="' + (o.x + o.w) +
+    '" y2="' + (o.y + o.h) + '" stroke="' + S2C.axis + '" stroke-width="1"/>';
   if (o.title) {
-    g += '<text class="panelttl" x="' + (o.x + o.w / 2).toFixed(1) + '" y="' + (o.y - 12) + '">' + o.title + '</text>';
+    g += '<text x="' + (o.x + o.w / 2).toFixed(1) + '" y="' + (o.y - 12) +
+      '" text-anchor="middle" fill="' + S2C.head + '" font-size="12.5" font-weight="700">' + o.title + '</text>';
   }
   return { sx: sx, sy: sy, g: g };
 }
 
-function s2path(pts, p) {
-  return pts.map(function (d, i) {
-    return (i ? "L" : "M") + p.sx(d[0]).toFixed(1) + " " + p.sy(d[1]).toFixed(1);
+/* 선 하나 */
+function s2line(pts, p, color, width, dashed) {
+  const d = pts.map(function (v, i) {
+    return (i ? "L" : "M") + p.sx(v[0]).toFixed(1) + " " + p.sy(v[1]).toFixed(1);
   }).join(" ");
+  return '<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="' + (width || 2) +
+    '" stroke-linejoin="round" stroke-linecap="round"' +
+    (dashed ? ' stroke-dasharray="5 4"' : '') + '/>';
 }
 
-function s2dots(pts, p, cls, r) {
-  return pts.map(function (d) {
-    return '<circle class="dot ' + (cls || "") + '" cx="' + p.sx(d[0]).toFixed(1) + '" cy="' + p.sy(d[1]).toFixed(1) + '" r="' + (r || 3) + '"/>';
+function s2dots(pts, p, color, r) {
+  return pts.map(function (v) {
+    return '<circle cx="' + p.sx(v[0]).toFixed(1) + '" cy="' + p.sy(v[1]).toFixed(1) +
+      '" r="' + (r || 3) + '" fill="' + color + '" fill-opacity="0.55"/>';
+  }).join("");
+}
+
+/* 막대 */
+function s2bars(pts, p, baseY, color, bw) {
+  return pts.map(function (v) {
+    const x = p.sx(v[0]) - bw / 2;
+    const y = p.sy(v[1]);
+    const h = Math.max(0, baseY - y);
+    return '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw +
+      '" height="' + h.toFixed(1) + '" fill="' + color + '" fill-opacity="0.85"/>';
   }).join("");
 }
 
 function s2svg(w, h, inner) {
-  return '<svg class="chart-svg" viewBox="0 0 ' + w + ' ' + h + '" role="img" preserveAspectRatio="xMidYMid meet">' + inner + '</svg>';
+  return '<svg class="chart-svg" viewBox="0 0 ' + w + ' ' + h +
+    '" role="img" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">' + inner + '</svg>';
 }
 
 /* 회귀식을 촘촘한 점 목록으로 */
@@ -330,12 +377,12 @@ function s2chartCorrTime(el) {
   s2ticks(cmin - cpad, cmax + cpad, 4).forEach(function (v) {
     const py = pC.sy(v);
     if (py < PY - 1 || py > PY + PH + 1) return;
-    g += '<text class="axlbl right" x="' + (PX + PW + 8) + '" y="' + (py + 3.5).toFixed(1) + '">' + Math.round(v) + '</text>';
+    g += s2text(PX + PW + 8, (py + 3.5).toFixed(1), Math.round(v), "start");
   });
-  g += '<text class="axtitle" x="2" y="' + (PY - 12) + '">기온 편차 (℃)</text>';
-  g += '<text class="axtitle end" x="' + (PX + PW) + '" y="' + (PY - 12) + '">CO₂ (ppm)</text>';
-  g += '<path class="line co2" d="' + s2path(m.map(function (d) { return [d[0], d[2]]; }), pC) + '"/>';
-  g += '<path class="line temp" d="' + s2path(m.map(function (d) { return [d[0], d[1]]; }), pT) + '"/>';
+  g += s2text(2, PY - 12, "기온 편차 (℃)", "start", S2C.axtitle);
+  g += s2text(PX + PW, PY - 12, "CO₂ (ppm)", "end", S2C.axtitle);
+  g += s2line(m.map(function (d) { return [d[0], d[2]]; }), pC, S2C.co2, 2);
+  g += s2line(m.map(function (d) { return [d[0], d[1]]; }), pT, S2C.temp, 2);
 
   el.innerHTML = s2svg(W, H, g);
 }
@@ -357,9 +404,9 @@ function s2chartCorrScatter(el) {
     xfmt: function (v) { return String(Math.round(v)); }
   });
   let g = p.g;
-  g += '<text class="axtitle" x="2" y="' + (PY - 12) + '">기온 편차 (℃)</text>';
-  g += '<text class="axtitle mid" x="' + (PX + PW / 2).toFixed(1) + '" y="' + (H - 6) + '">CO₂ 농도 (ppm)</text>';
-  g += s2dots(m.map(function (d) { return [d[2], d[1]]; }), p, "", 3.6);
+  g += s2text(2, PY - 12, "기온 편차 (℃)", "start", S2C.axtitle);
+  g += s2text((PX + PW / 2).toFixed(1), H - 6, "CO₂ 농도 (ppm)", "middle", S2C.axtitle);
+  g += s2dots(m.map(function (d) { return [d[2], d[1]]; }), p, S2C.co2, 3.6);
   el.innerHTML = s2svg(W, H, g);
 }
 
@@ -389,16 +436,19 @@ function s2chartRegression(el) {
     yfmt: function (v) { return v.toFixed(1); },
     xfmt: function (v) { return String(Math.round(v)); }
   });
-  let g = p.g;
-  g += '<rect class="band" x="' + p.sx(xlast).toFixed(1) + '" y="' + PY + '" width="' + (p.sx(XEND) - p.sx(xlast)).toFixed(1) + '" height="' + PH + '"/>';
-  g += '<text class="axtitle" x="2" y="' + (PY - 12) + '">기온 편차 (℃)</text>';
-  g += '<text class="axtitle mid" x="' + (PX + PW / 2).toFixed(1) + '" y="' + (H - 6) + '">연도</text>';
-  g += s2dots(t, p, "plain", 2.6);
-  g += '<path class="line fit" d="' + s2path(s2curve(f1, xs[0], xlast), p) + '"/>';
-  g += '<path class="line fit2" d="' + s2path(s2curve(f2, xs[0], xlast), p) + '"/>';
-  g += '<path class="line fit ext" d="' + s2path(s2curve(f1, xlast, XEND, 20), p) + '"/>';
-  g += '<path class="line fit2 ext" d="' + s2path(s2curve(f2, xlast, XEND, 20), p) + '"/>';
-  g += '<text class="axlbl mid" x="' + ((p.sx(xlast) + p.sx(XEND)) / 2).toFixed(1) + '" y="' + (PY + 14) + '">예측 구간</text>';
+  /* 예측 구간 음영은 격자보다 먼저 깔아야 선이 가려지지 않는다 */
+  let g = '<rect x="' + p.sx(xlast).toFixed(1) + '" y="' + PY + '" width="' +
+    (p.sx(XEND) - p.sx(xlast)).toFixed(1) + '" height="' + PH +
+    '" fill="' + S2C.band + '" fill-opacity="0.55"/>';
+  g += p.g;
+  g += s2text(2, PY - 12, "기온 편차 (℃)", "start", S2C.axtitle);
+  g += s2text((PX + PW / 2).toFixed(1), H - 6, "연도", "middle", S2C.axtitle);
+  g += s2dots(t, p, S2C.plain, 2.6);
+  g += s2line(s2curve(f1, xs[0], xlast), p, S2C.fit, 2);
+  g += s2line(s2curve(f2, xs[0], xlast), p, S2C.fit2, 2);
+  g += s2line(s2curve(f1, xlast, XEND, 20), p, S2C.fit, 2, true);
+  g += s2line(s2curve(f2, xlast, XEND, 20), p, S2C.fit2, 2, true);
+  g += s2text(((p.sx(xlast) + p.sx(XEND)) / 2).toFixed(1), PY + 14, "예측 구간", "middle", S2C.axtitle);
   el.innerHTML = s2svg(W, H, g);
 }
 
@@ -426,25 +476,28 @@ function s2mistakeOutlier(el) {
     xfmt: function (v) { return String(Math.round(v)); }
   });
   let g = p.g;
-  g += s2dots(base, p, "plain", 4);
-  g += '<circle class="dot out" cx="' + p.sx(1).toFixed(1) + '" cy="' + p.sy(12.5).toFixed(1) + '" r="5.5"/>';
-  g += '<path class="line fit" d="' + s2path(s2curve(fitA, 0, 13, 2), p) + '"/>';
-  g += '<path class="line fit2" d="' + s2path(s2curve(fitB, 0, 13, 2), p) + '"/>';
-  g += '<text class="axlbl right" x="' + (p.sx(3.4)).toFixed(1) + '" y="' + (p.sy(s2polyval(fitA, 3.4)) + 18).toFixed(1) + '">이상치 제외</text>';
-  g += '<text class="axlbl right" x="' + (p.sx(3.4)).toFixed(1) + '" y="' + (p.sy(s2polyval(fitB, 3.4)) - 10).toFixed(1) + '">이상치 포함</text>';
-  g += '<text class="axlbl left" x="' + (p.sx(1) + 46).toFixed(1) + '" y="' + (p.sy(12.5) + 4).toFixed(1) + '">이상치</text>';
+  g += s2dots(base, p, S2C.plain, 4);
+  g += '<circle cx="' + p.sx(1).toFixed(1) + '" cy="' + p.sy(12.5).toFixed(1) +
+    '" r="5.5" fill="' + S2C.temp + '"/>';
+  g += s2line(s2curve(fitA, 0, 13, 2), p, S2C.fit, 2);
+  g += s2line(s2curve(fitB, 0, 13, 2), p, S2C.temp, 2);
+  g += s2text((p.sx(1) + 12).toFixed(1), (p.sy(12.5) + 4).toFixed(1), "이상치", "start", S2C.temp);
+  g += s2text(p.sx(3.4).toFixed(1), (p.sy(s2polyval(fitA, 3.4)) + 18).toFixed(1), "이상치 제외", "end", S2C.fit);
+  g += s2text(p.sx(3.4).toFixed(1), (p.sy(s2polyval(fitB, 3.4)) - 10).toFixed(1), "이상치 포함", "end", S2C.temp);
   el.innerHTML = s2svg(W, H, g);
 }
 
+/* 축 왜곡 — 막대그래프 두 개를 나란히 */
 function s2mistakeAxis(el) {
   const d = [];
-  for (let i = 0; i < 12; i++) d.push([i, 20 + i * 0.05]);
+  for (let i = 0; i < 10; i++) d.push([i, 20 + i * 0.06]);
   const W = 720, H = 300, PY = 40, PH = H - PY - 44, PW = 280;
-  const A = s2panel({ x: 54, y: PY, w: PW, h: PH, xmin: -.4, xmax: 11.4, ymin: 0, ymax: 25, xfmt: function (v) { return String(Math.round(v)); }, title: "y축을 0부터" });
-  const B = s2panel({ x: 54 + PW + 66, y: PY, w: PW, h: PH, xmin: -.4, xmax: 11.4, ymin: 19.9, ymax: 20.7, yfmt: function (v) { return v.toFixed(1); }, xfmt: function (v) { return String(Math.round(v)); }, title: "y축을 좁게 확대" });
+  const A = s2panel({ x: 54, y: PY, w: PW, h: PH, xmin: -.8, xmax: 9.8, ymin: 0, ymax: 25, xfmt: function (v) { return String(Math.round(v)); }, title: "y축을 0부터" });
+  const B = s2panel({ x: 54 + PW + 66, y: PY, w: PW, h: PH, xmin: -.8, xmax: 9.8, ymin: 19.9, ymax: 20.6, yfmt: function (v) { return v.toFixed(1); }, xfmt: function (v) { return String(Math.round(v)); }, title: "y축을 좁게 확대" });
+  const baseY = PY + PH;
   let g = A.g + B.g;
-  g += '<path class="line temp" d="' + s2path(d, A) + '"/>';
-  g += '<path class="line temp" d="' + s2path(d, B) + '"/>';
+  g += s2bars(d, A, baseY, S2C.co2, 20);
+  g += s2bars(d, B, baseY, S2C.co2, 20);
   el.innerHTML = s2svg(W, H, g);
 }
 
@@ -458,10 +511,12 @@ function s2mistakeSlice(el) {
   const W = 720, H = 300, PY = 40, PH = H - PY - 44, PW = 280;
   const A = s2panel({ x: 54, y: PY, w: PW, h: PH, xmin: 0, xmax: 39, ymin: -.3, ymax: 3.6, yfmt: function (v) { return v.toFixed(1); }, xfmt: function (v) { return String(Math.round(v)); }, title: "전체 구간" });
   const B = s2panel({ x: 54 + PW + 66, y: PY, w: PW, h: PH, xmin: 16, xmax: 26, ymin: 1.3, ymax: 2.5, yfmt: function (v) { return v.toFixed(1); }, xfmt: function (v) { return String(Math.round(v)); }, title: "가운데만 잘라내면" });
-  let g = A.g + B.g;
-  g += '<rect class="band" x="' + A.sx(16).toFixed(1) + '" y="' + PY + '" width="' + (A.sx(26) - A.sx(16)).toFixed(1) + '" height="' + PH + '"/>';
-  g += '<path class="line temp" d="' + s2path(d, A) + '"/>';
-  g += '<path class="line temp" d="' + s2path(slice, B) + '"/>';
+  let g = '<rect x="' + A.sx(16).toFixed(1) + '" y="' + PY + '" width="' +
+    (A.sx(26) - A.sx(16)).toFixed(1) + '" height="' + PH +
+    '" fill="' + S2C.band + '" fill-opacity="0.75"/>';
+  g += A.g + B.g;
+  g += s2line(d, A, S2C.temp, 2);
+  g += s2line(slice, B, S2C.temp, 2);
   el.innerHTML = s2svg(W, H, g);
 }
 
@@ -477,9 +532,11 @@ function s2mistakeGeneral(el) {
   });
   let g = p.g;
   series.forEach(function (s, i) {
-    g += '<path class="line ' + (i === 5 ? "pick" : "faint") + '" d="' + s2path(s, p) + '"/>';
+    if (i !== 5) g += s2line(s, p, S2C.faint, 1.4);
   });
-  g += '<text class="axlbl right" x="' + (PX + PW + 6) + '" y="' + (p.sy(series[5][19][1]) + 3.5).toFixed(1) + '">지점 F</text>';
+  g += s2line(series[5], p, S2C.temp, 2.4);
+  g += s2text(PX + PW + 6, (p.sy(series[5][19][1]) + 3.5).toFixed(1), "지점 F", "start", S2C.temp);
+  g += s2text(PX + PW + 6, (p.sy(series[2][19][1]) + 3.5).toFixed(1), "그 외 5개", "start", S2C.lbl);
   el.innerHTML = s2svg(W, H, g);
 }
 
